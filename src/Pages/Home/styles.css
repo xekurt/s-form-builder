@@ -1,0 +1,48 @@
+.home__container {
+  width: 95vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: aliceblue;
+}
+.tabs__buttons {
+  display: flex;
+  justify-content: space-evenly;
+  position: relative;
+}
+.tabs__buttons button {
+  width: 40%;
+  height: 35px;
+  font-size: large;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  border: none;
+  margin: 1rem auto;
+  color: white;
+}
+.stats__button {
+  background-color: #073b4c;
+}
+.stats__button:focus {
+  background-color: #07334c;
+}
+.surveys__button {
+  background-color: #2a9d8f;
+}
+.surveys__button:focus {
+  background-color: #2a918f;
+}
+
+.active {
+  border-bottom: 2px solid #14213d;
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  right: 0;
+  bottom: 0;
+  transition: 0.4s ease-in-out;
+  z-index: 1;
+}
+.left {
+  transform: translateX(-100%);
+}

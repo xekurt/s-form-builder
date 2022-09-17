@@ -1,0 +1,28 @@
+.modal__provider {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  text-align: center;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal__wrapper {
+  position: relative;
+  padding-top: 2.4rem;
+  max-height: 90%;
+  background-color: white;
+  z-index: 2;
+  border-radius: 5px;
+}
+.close__btn {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 28px;
+  cursor: pointer;
+  color: red;
+}
