@@ -37,15 +37,17 @@ const Index = ({ editSurvey }) => {
   const handleCreateSurvey = () => {
     const validateForm = (data) => {
       if (data.title.trim().length === 0) {
-        setError("title");
+        return "title";
       } else if (data.startDate.trim().length === 0) {
-        setError("startDate");
+        return "startDate";
       } else if (data.endDate.trim().length === 0) {
-        setError("endDate");
+        return "endDate";
       }
+      return "";
     };
-    validateForm(surveyData);
-    if (error) return;
+    const tempErr = validateForm(surveyData);
+    setError(tempErr);
+    if (tempErr) return;
     dispatch(addSurvey(surveyData));
     dispatch(removeModal());
   };

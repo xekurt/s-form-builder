@@ -1,21 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const surveysSlice = createSlice({
-  name: "survies",
-  initialState: [],
+export const mainSlice = createSlice({
+  name: "main",
+  initialState: { uncategorizedQuestions: [], surveys: [] },
   reducers: {
     addSurvey: (state, action) => {
       const { payload } = action;
-      state.push(payload);
+      state.surveys.push(payload);
     },
     removeSurvey: (state, action) => {
-      state.pop();
+      state.surveys.pop();
     },
-    clearAllSurve: (state, action) => {
-      state = [];
+    clearAllSurveys: (state, action) => {
+      state.surveys = [];
+    },
+    addQuestion: (state, action) => {
+      const { payload } = action;
+      state.uncategorizedQuestions.push(payload);
     },
   },
 });
 
-export const { addSurvey, clearAllSurveys } = surveysSlice.actions;
-export default surveysSlice.reducer;
+export const { addSurvey, clearAllSurveys, addQuestion } = mainSlice.actions;
+export default mainSlice.reducer;

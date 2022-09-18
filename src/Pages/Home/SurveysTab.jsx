@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { addModal } from "../../Store/Slices/ModalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
 
 const SurveysTab = () => {
   const state = useSelector((state) => state);
-  const { surveys, questions } = state;
+  console.info(state);
+  const { main } = state;
+  const { surveys, uncategorizedQuestions: questions } = main;
+  const [movementDetails, setMovementDetails] = useState({
+    originId: "",
+    destinationId: "",
+  });
   const [selectedSurvey, setSelectedSurvey] = useState(null);
 
   const dispatch = useDispatch();
@@ -19,25 +25,49 @@ const SurveysTab = () => {
   const handleSelectSurvey = (item) => {
     setSelectedSurvey(item);
   };
+
+  // DRAG AND DROP LOGIC
+  const handleDrop = (id) => {
+    setMovementDetails((prevState) => ({ ...prevState, destinationId: id }));
+  };
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+  const handleDragStart = (e) => {
+    const { id } = e.target;
+    setMovementDetails((prevState) => ({ ...prevState, originId: id }));
+  };
+
+  useEffect(() => {
+    // console.info(movementDetails);
+  }, [movementDetails]);
+
+  // UI FUNCTIONS
   const renderSurveys = (item, index) => {
-    const { title } = item;
+    const { title, id } = item;
     return (
       <div
+        id={id}
         className="survey__item"
         onClick={() => handleSelectSurvey(item)}
         key={index}
+        onDragOver={handleDragOver}
+        onDrop={() => handleDrop(id)}
       >
         <p>{title}</p>
       </div>
     );
   };
   const renderQuestions = (item, index) => {
-    const { title, type } = item;
+    const { title, type, id } = item;
     return (
       <div
+        id={id}
         className="question__item"
         onClick={() => handleSelectSurvey(item)}
         key={index}
+        draggable
+        onDragStart={handleDragStart}
       >
         <span>
           {type === "multipleChoice"
