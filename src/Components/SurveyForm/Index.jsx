@@ -2,7 +2,7 @@ import React from "react";
 import { generateRandom } from "../../utils/randomId";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addSurvey } from "../../Store/Slices/SurveysSlice";
+import { addSurvey } from "../../Store/Slices/MainSlice";
 import { removeModal } from "../../Store/Slices/ModalSlice";
 import "./styles.css";
 import { useEffect } from "react";

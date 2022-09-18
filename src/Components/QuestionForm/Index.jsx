@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import "./styles.css";
 import { useDispatch } from "react-redux";
-import { addQuestion } from "../../Store/Slices/SurveysSlice";
+import { addQuestion } from "../../Store/Slices/MainSlice";
 import { removeModal } from "../../Store/Slices/ModalSlice";
 
 const Index = ({ editQuestion }) => {
