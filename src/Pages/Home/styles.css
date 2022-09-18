@@ -46,3 +46,59 @@
 .left {
   transform: translateX(-100%);
 }
+
+.surveys__tab {
+  margin-top: 2rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+.column {
+  text-align: center;
+  width: 30%;
+  min-height: 100px;
+}
+.surveys {
+  margin: 1rem auto;
+  min-height: 100px;
+  max-height: 400px;
+  overflow-y: scroll;
+  border: 1px solid slategray;
+  position: relative;
+  padding: 1rem;
+}
+
+.add__button {
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  left: 0;
+  background-color: #66a868;
+  color: white;
+  border-radius: 0;
+  font-size: large;
+}
+.add__question__button {
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  left: 0;
+  background-color: #219ebc;
+  color: white;
+  border-radius: 0;
+  font-size: large;
+}
+
+.survey__item {
+  padding: 0.5rem;
+  text-align: end;
+  cursor: pointer;
+  margin: 0.5rem auto;
+  border: 1px solid #93b7be;
+  background-color: #f1fffa;
+  border-radius: 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}

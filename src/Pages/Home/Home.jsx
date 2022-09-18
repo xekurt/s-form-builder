@@ -1,16 +1,14 @@
 import React from "react";
-import { addModal } from "../../Store/Slices/ModalSlice";
-import { useDispatch } from "react-redux";
+
 import "./styles.css";
 import { useState } from "react";
+import SurveysTab from "./SurveysTab";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState("surveys");
-  const dispatch = useDispatch();
-  const addSurveyModal = () => {
-    dispatch(addModal("survey"));
+  const Tab = {
+    surveys: <SurveysTab />,
   };
-
   return (
     <section className="home__container">
       <div className="tabs__buttons">
@@ -25,8 +23,7 @@ const Home = () => {
           پرسشنامه‌ها
         </button>
       </div>
-      <div></div>
-      {/* <button onClick={addSurveyModal}>ساخت پرسشنامه</button> */}
+      {Tab[activeTab]}
     </section>
   );
 };

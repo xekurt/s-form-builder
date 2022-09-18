@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "./styles.css";
 const Index = () => {
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
   return (
     <div className={`sidebar__container ${showSidebar ? "" : "disable"}`}>
       <div className="sidebar__button__container">

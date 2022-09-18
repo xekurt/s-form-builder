@@ -1,0 +1,23 @@
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-size: medium;
+  padding: 1rem;
+  width: 100%;
+  text-align: start;
+}
+.option p {
+  width: 20%;
+
+  margin: auto 1rem;
+}
+.option input {
+  margin: 0;
+  width: 16px;
+}
+.options {
+}
+.options input {
+  width: 50%;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeModal } from "../../Store/Slices/ModalSlice";
+import AddQuestionModal from "../AddQuestionModal/Index";
 import AddSurveyModal from "../AddSurveyModal/AddSurveyModal";
 import "./styles.css";
 
@@ -11,6 +12,7 @@ const Index = ({ children }) => {
 
   const modalComponents = {
     survey: <AddSurveyModal />,
+    question: <AddQuestionModal />,
   };
 
   const handleRemoveModal = () => {
