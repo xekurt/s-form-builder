@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { addModal } from "../../Store/Slices/ModalSlice";
+import { moveQuestion } from "../../Store/Slices/MainSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
 
@@ -39,8 +40,11 @@ const SurveysTab = () => {
   };
 
   useEffect(() => {
-    // console.info(movementDetails);
-  }, [movementDetails]);
+    if (movementDetails.destinationId && movementDetails.originId) {
+      dispatch(moveQuestion(movementDetails));
+      setMovementDetails({ originId: "", destinationId: "" });
+    }
+  }, [movementDetails, dispatch]);
 
   // UI FUNCTIONS
   const renderSurveys = (item, index) => {
@@ -84,7 +88,7 @@ const SurveysTab = () => {
   return (
     <section className="surveys__tab">
       <article className="column">
-        <h4> همه سوالات</h4>
+        <h4> سوالات دسته بندی نشده</h4>
         <div className="surveys">
           {questions.length > 0 ? (
             questions.map(renderQuestions)
