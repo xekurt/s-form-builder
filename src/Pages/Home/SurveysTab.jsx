@@ -32,13 +32,20 @@ const SurveysTab = () => {
     );
   };
   const renderQuestions = (item, index) => {
-    const { title } = item;
+    const { title, type } = item;
     return (
       <div
         className="question__item"
         onClick={() => handleSelectSurvey(item)}
         key={index}
       >
+        <span>
+          {type === "multipleChoice"
+            ? "چهارگزینه‌ای"
+            : type === "truthy"
+            ? "صحیح و غلط"
+            : "تشریحی"}
+        </span>
         <p>{title}</p>
       </div>
     );

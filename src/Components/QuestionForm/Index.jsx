@@ -24,12 +24,12 @@ const Index = ({ editQuestion }) => {
   const [truthyOptions, setTruthyOptions] = useState(false);
 
   const handleInput = (e) => {
-    setError("initial");
+    setError("");
     const { id, value } = e.target;
     setQuestionData((prevState) => ({ ...prevState, [id]: value }));
   };
   const handleOptionsLabel = (e) => {
-    setError("initial");
+    setError("");
     const { id, value } = e.target;
     setMultipleChoiceOptions((prevState) => {
       return prevState.map((item) => {
@@ -41,14 +41,13 @@ const Index = ({ editQuestion }) => {
   };
 
   const handleCheckbox = (e) => {
-    setError("initial");
+    setError("");
     const { id } = e.target;
-
     setQuestionData((prevState) => ({ ...prevState, type: id }));
   };
 
   const handleMultipleChoiceValue = (e) => {
-    setError("initial");
+    setError("");
     const { id } = e.target;
     setMultipleChoiceOptions((prevState) =>
       prevState.map((item) => {
@@ -69,23 +68,25 @@ const Index = ({ editQuestion }) => {
     }
   };
   const handleCreateQuestion = () => {
-    const validateForm = (question, multiple, truthy) => {
+    const validateForm = (question, multiple) => {
       if (question.title.trim().length < 1) {
-        setError("title");
+        return "title";
       } else if (question.type.trim().length < 1) {
-        setError("type");
+        return "type";
       }
       if (question.type === "multipleChoice") {
         if (!multiple.every((item) => item.title.trim().length > 0)) {
-          setError("option-title");
+          return "option-title";
         } else if (!multiple.some((item) => item.value)) {
-          setError("option-value");
+          return "option-value";
         }
       }
+      return "";
     };
-    validateForm(questionData, multipleChoiceOptions, truthyOptions);
-    console.info(error);
-    if (error !== "initial") return;
+
+    const tempError = validateForm(questionData, multipleChoiceOptions);
+    setError(tempError);
+    if (tempError) return;
 
     let question = questionData;
     if (question.type === "multipleChoice") {
@@ -93,7 +94,6 @@ const Index = ({ editQuestion }) => {
     } else if (question.type === "truthy") {
       question = { ...question, options: truthyOptions };
     }
-    console.info("running");
     dispatch(addQuestion(question));
     dispatch(removeModal());
   };

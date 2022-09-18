@@ -1,7 +1,7 @@
 import React from "react";
 import { generateRandom } from "../../utils/randomId";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addSurvey } from "../../Store/Slices/SurveysSlice";
 import { removeModal } from "../../Store/Slices/ModalSlice";
 import "./styles.css";
@@ -9,7 +9,6 @@ import { useEffect } from "react";
 
 const Index = ({ editSurvey }) => {
   const dispatch = useDispatch();
-  const store = useSelector((state) => state);
   const [error, setError] = useState("initial");
   const [surveyData, setSurveyData] = useState({
     id: generateRandom(),
