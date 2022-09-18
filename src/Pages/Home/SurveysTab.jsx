@@ -52,7 +52,7 @@ const SurveysTab = () => {
     return (
       <div
         id={id}
-        className="survey__item"
+        className={`survey__item ${selectedSurvey?.id === id && "selected"}`}
         onClick={() => handleSelectSurvey(item)}
         key={index}
         onDragOver={handleDragOver}
@@ -68,7 +68,6 @@ const SurveysTab = () => {
       <div
         id={id}
         className="question__item"
-        onClick={() => handleSelectSurvey(item)}
         key={index}
         draggable
         onDragStart={handleDragStart}
@@ -101,9 +100,13 @@ const SurveysTab = () => {
         </div>
       </article>
       <article className="column">
-        <h4> سوالات این پرسشنامه</h4>
+        <h4> سوالات پرسشنامه : {selectedSurvey?.title}</h4>
         <div className="surveys">
-          <p style={{ margin: "1rem auto" }}>یک پرسشنامه انتخاب کنید</p>
+          {selectedSurvey ? (
+            selectedSurvey.questions.map(renderQuestions)
+          ) : (
+            <p style={{ margin: "1rem auto" }}>یک پرسشنامه انتخاب کنید</p>
+          )}
         </div>
       </article>
       <article className="column">
