@@ -17,5 +17,5 @@ export const surveysSlice = createSlice({
   },
 });
 
-export const { addSurvey, clearAllSurveys, removeModal } = surveysSlice.actions;
+export const { addSurvey, clearAllSurveys } = surveysSlice.actions;
 export default surveysSlice.reducer;

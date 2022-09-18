@@ -6,6 +6,7 @@ import SurveysTab from "./SurveysTab";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState("surveys");
+
   const Tab = {
     surveys: <SurveysTab />,
   };

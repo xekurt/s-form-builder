@@ -3,8 +3,12 @@ import { generateRandom } from "../../utils/randomId";
 import { useState } from "react";
 
 import "./styles.css";
+import { useDispatch } from "react-redux";
+import { addQuestion } from "../../Store/Slices/QuestionSlice";
+import { removeModal } from "../../Store/Slices/ModalSlice";
 
 const Index = ({ editQuestion }) => {
+  const dispatch = useDispatch();
   const [error, setError] = useState("initial");
   const [questionData, setQuestionData] = useState({
     id: generateRandom(),
@@ -39,7 +43,7 @@ const Index = ({ editQuestion }) => {
   const handleCheckbox = (e) => {
     setError("initial");
     const { id } = e.target;
-    setError("");
+
     setQuestionData((prevState) => ({ ...prevState, type: id }));
   };
 
@@ -80,6 +84,7 @@ const Index = ({ editQuestion }) => {
       }
     };
     validateForm(questionData, multipleChoiceOptions, truthyOptions);
+    console.info(error);
     if (error !== "initial") return;
 
     let question = questionData;
@@ -88,6 +93,9 @@ const Index = ({ editQuestion }) => {
     } else if (question.type === "truthy") {
       question = { ...question, options: truthyOptions };
     }
+    console.info("running");
+    dispatch(addQuestion(question));
+    dispatch(removeModal());
   };
 
   return (
