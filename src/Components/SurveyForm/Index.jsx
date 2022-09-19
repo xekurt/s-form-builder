@@ -12,6 +12,7 @@ const Index = ({ editSurvey }) => {
   const [error, setError] = useState("initial");
   const [surveyData, setSurveyData] = useState({
     id: generateRandom(),
+    type: "",
     title: "",
     desc: "",
     startDate: "",
@@ -42,6 +43,8 @@ const Index = ({ editSurvey }) => {
         return "startDate";
       } else if (data.endDate.trim().length === 0) {
         return "endDate";
+      } else if (data.type.trim().length === 0) {
+        return "type";
       }
       return "";
     };
@@ -56,6 +59,43 @@ const Index = ({ editSurvey }) => {
   }, [editSurvey]);
   return (
     <>
+      <div className="radio__container">
+        <label style={{ color: error === "type" && "red" }}>
+          لطفا نوع پرسشنامه را انتخاب کنید *
+        </label>
+        <div className="radio__items">
+          <div className="radio__item">
+            <input
+              type="radio"
+              id="azmoon"
+              value="azmoon"
+              checked={surveyData.type === "azmoon"}
+              onChange={() => {
+                setSurveyData((prevState) => ({
+                  ...prevState,
+                  type: "azmoon",
+                }));
+              }}
+            />
+            <label htmlFor="azmoon">آزمون</label>
+          </div>
+          <div className="radio__item">
+            <input
+              type="radio"
+              id="normal"
+              value="normal"
+              checked={surveyData.type === "normal"}
+              onChange={() => {
+                setSurveyData((prevState) => ({
+                  ...prevState,
+                  type: "normal",
+                }));
+              }}
+            />
+            <label htmlFor="normal">معمولی</label>
+          </div>
+        </div>
+      </div>
       <div className="box">
         <label htmlFor="title" style={{ color: error === "title" && "red" }}>
           *عنوان پرسشنامه را وارد کنید :{" "}

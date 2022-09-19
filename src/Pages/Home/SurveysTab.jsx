@@ -40,7 +40,6 @@ const SurveysTab = () => {
     const { id } = e.target;
     setMovementDetails((prevState) => ({ ...prevState, originId: id }));
   };
-  console.info(selectedSurveyId);
 
   useEffect(() => {
     if (movementDetails.destinationId && movementDetails.originId) {
@@ -84,7 +83,7 @@ const SurveysTab = () => {
           </span>
 
           <span className="tag">
-            {type === "multipleChoice"
+            {type === "fourAnswer"
               ? "چهارگزینه‌ای"
               : type === "truthy"
               ? "صحیح و غلط"
