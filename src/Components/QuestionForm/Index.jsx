@@ -14,6 +14,7 @@ const Index = ({ editQuestion }) => {
     id: generateRandom(),
     title: "",
     type: "",
+    surveyId: "",
   });
   const [multipleChoiceOptions, setMultipleChoiceOptions] = useState([
     { title: "", value: false, label: "option1" },

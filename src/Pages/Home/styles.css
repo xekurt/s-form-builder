@@ -119,9 +119,22 @@
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
-.question__item span {
+.question__item .tag {
   font-size: 8px;
   background-color: ghostwhite;
   border-radius: 10px;
   padding: 4px;
+}
+.delete__icon {
+  color: white;
+  background-color: #e63946;
+  text-align: center;
+  height: 24px;
+  width: 24px;
+  border-radius: 10px;
+  font-size: 20px;
+  padding-bottom: 4px;
+  margin-right: 0.4rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { addModal } from "../../Store/Slices/ModalSlice";
-import { moveQuestion } from "../../Store/Slices/MainSlice";
+import { moveQuestion, removeQuestion } from "../../Store/Slices/MainSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
 
 const SurveysTab = () => {
   const state = useSelector((state) => state);
-  console.info(state);
   const { main } = state;
   const { surveys, uncategorizedQuestions: questions } = main;
   const [movementDetails, setMovementDetails] = useState({
     originId: "",
     destinationId: "",
   });
+  const [selectedSurveyId, setSelectedSurveyId] = useState("");
   const [selectedSurvey, setSelectedSurvey] = useState(null);
 
   const dispatch = useDispatch();
@@ -23,10 +23,12 @@ const SurveysTab = () => {
     dispatch(addModal("question"));
   };
 
-  const handleSelectSurvey = (item) => {
-    setSelectedSurvey(item);
+  const handleDeleteQuestion = (surveyId, id) => {
+    dispatch(removeQuestion({ surveyId, id }));
   };
-
+  useEffect(() => {
+    setSelectedSurvey(surveys.find((item) => item.id === selectedSurveyId));
+  }, [selectedSurveyId, surveys]);
   // DRAG AND DROP LOGIC
   const handleDrop = (id) => {
     setMovementDetails((prevState) => ({ ...prevState, destinationId: id }));
@@ -38,6 +40,7 @@ const SurveysTab = () => {
     const { id } = e.target;
     setMovementDetails((prevState) => ({ ...prevState, originId: id }));
   };
+  console.info(selectedSurveyId);
 
   useEffect(() => {
     if (movementDetails.destinationId && movementDetails.originId) {
@@ -52,9 +55,9 @@ const SurveysTab = () => {
     return (
       <div
         id={id}
-        className={`survey__item ${selectedSurvey?.id === id && "selected"}`}
-        onClick={() => handleSelectSurvey(item)}
+        className={`survey__item ${selectedSurveyId === id && "selected"}`}
         key={index}
+        onClick={() => setSelectedSurveyId(id)}
         onDragOver={handleDragOver}
         onDrop={() => handleDrop(id)}
       >
@@ -63,7 +66,7 @@ const SurveysTab = () => {
     );
   };
   const renderQuestions = (item, index) => {
-    const { title, type, id } = item;
+    const { title, type, id, surveyId } = item;
     return (
       <div
         id={id}
@@ -72,13 +75,22 @@ const SurveysTab = () => {
         draggable
         onDragStart={handleDragStart}
       >
-        <span>
-          {type === "multipleChoice"
-            ? "چهارگزینه‌ای"
-            : type === "truthy"
-            ? "صحیح و غلط"
-            : "تشریحی"}
-        </span>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <span
+            className="delete__icon"
+            onClick={() => handleDeleteQuestion(surveyId, id)}
+          >
+            ×
+          </span>
+
+          <span className="tag">
+            {type === "multipleChoice"
+              ? "چهارگزینه‌ای"
+              : type === "truthy"
+              ? "صحیح و غلط"
+              : "تشریحی"}
+          </span>
+        </div>
         <p>{title}</p>
       </div>
     );

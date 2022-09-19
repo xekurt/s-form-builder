@@ -9,14 +9,33 @@ export const mainSlice = createSlice({
       state.surveys.push(payload);
     },
     removeSurvey: (state, action) => {
-      state.surveys.pop();
+      // state.surveys.pop();
     },
     clearAllSurveys: (state, action) => {
-      state.surveys = [];
+      // state.surveys = [];
     },
     addQuestion: (state, action) => {
       const { payload } = action;
       state.uncategorizedQuestions.push(payload);
+    },
+    removeQuestion: (state, action) => {
+      const {
+        payload: { surveyId, id },
+      } = action;
+      if (surveyId) {
+        state.surveys = state.surveys.map((survey) => {
+          if (survey.id === surveyId) {
+            survey.questions = survey.questions.filter(
+              (question) => question.id !== id
+            );
+            return survey;
+          } else return survey;
+        });
+      } else {
+        state.uncategorizedQuestions = state.uncategorizedQuestions.filter(
+          (question) => question.id !== id
+        );
+      }
     },
     moveQuestion: (state, action) => {
       const { payload } = action;
@@ -25,7 +44,13 @@ export const mainSlice = createSlice({
       });
       state.surveys = state.surveys.map((survey) => {
         if (survey.id === payload.destinationId) {
-          return { ...survey, questions: [...survey.questions, target] };
+          return {
+            ...survey,
+            questions: [
+              ...survey.questions,
+              { ...target, surveyId: payload.destinationId },
+            ],
+          };
         } else return survey;
       });
       state.uncategorizedQuestions = state.uncategorizedQuestions.filter(
@@ -35,6 +60,11 @@ export const mainSlice = createSlice({
   },
 });
 
-export const { addSurvey, clearAllSurveys, addQuestion, moveQuestion } =
-  mainSlice.actions;
+export const {
+  addSurvey,
+  clearAllSurveys,
+  addQuestion,
+  moveQuestion,
+  removeQuestion,
+} = mainSlice.actions;
 export default mainSlice.reducer;
