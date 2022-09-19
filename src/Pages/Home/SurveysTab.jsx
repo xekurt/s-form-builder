@@ -8,6 +8,7 @@ const SurveysTab = () => {
   const state = useSelector((state) => state);
   const { main } = state;
   const { surveys, uncategorizedQuestions: questions } = main;
+
   const [movementDetails, setMovementDetails] = useState({
     originId: "",
     destinationId: "",

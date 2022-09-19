@@ -20,6 +20,7 @@ const Index = ({ editSurvey }) => {
     picture: "",
     questions: [],
   });
+
   const handleChangeInput = (e) => {
     const { id, value } = e.target;
     setError("");

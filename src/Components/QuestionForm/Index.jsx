@@ -39,12 +39,12 @@ const Index = ({ editQuestion }) => {
     const { id, value } = e.target;
     setQuestionData((prevState) => ({ ...prevState, [id]: value }));
   };
-  const handleOptionsLabel = (e) => {
+  const handlefourAnswerTitle = (e) => {
     setError("");
     const { id, value } = e.target;
     setfourAnswerOptions((prevState) => {
       return prevState.map((item) => {
-        if (item.label === id) {
+        if (item.id === id) {
           return { ...item, title: value };
         } else return item;
       });
@@ -62,7 +62,7 @@ const Index = ({ editQuestion }) => {
     const { id } = e.target;
     setfourAnswerOptions((prevState) =>
       prevState.map((item) => {
-        if (item.label === id) {
+        if (item.id === id) {
           return { ...item, value: true };
         } else {
           return { ...item, value: false };
@@ -104,7 +104,7 @@ const Index = ({ editQuestion }) => {
     );
   };
   const handleMultipleChoiceValue = (e) => {
-    const { id, value } = e.target;
+    const { id } = e.target;
     setMultipleChoiceOptions((prevState) =>
       prevState.map((item) => {
         if (item.id === id) {
@@ -126,16 +126,26 @@ const Index = ({ editQuestion }) => {
       if (question.type === "fourAnswer") {
         if (!four.every((item) => item.title.trim().length > 0)) {
           return "option-title";
-        } else if (!four.some((item) => item.value)) {
+        } else if (
+          !four.some((item) => item.value) &&
+          question.for === "azmoon"
+        ) {
           return "option-value";
         }
       }
       // Validation for multipleChoice
       if (question.type === "multipleChoice") {
+        if (!multiple.every((item) => item.title.trim().length > 0)) {
+          return "option-title";
+        } else if (
+          !multiple.some((item) => item.value) &&
+          question.for === "azmoon"
+        ) {
+          return "option-value";
+        }
       }
       return "";
     };
-
     const tempError = validateForm(
       questionData,
       fourAnswerOptions,
@@ -149,11 +159,14 @@ const Index = ({ editQuestion }) => {
       question = { ...question, options: [...fourAnswerOptions] };
     } else if (question.type === "truthy") {
       question = { ...question, options: truthyOptions };
+    } else if (question.type === "multipleChoice") {
+      question = { ...question, options: [...multipleChoiceOptions] };
     }
+
     dispatch(addQuestion(question));
     dispatch(removeModal());
   };
-  console.info(multipleChoiceOptions);
+
   return (
     <>
       <div className="radio__container">
@@ -260,15 +273,15 @@ const Index = ({ editQuestion }) => {
             <div className="option">
               <input
                 type="text"
-                id="option1"
+                id={fourAnswerOptions[0].id}
                 value={fourAnswerOptions[0].title}
-                onChange={handleOptionsLabel}
+                onChange={handlefourAnswerTitle}
               />
               <p>گزینه 1</p>
               <input
                 type="checkbox"
                 checked={fourAnswerOptions[0].value}
-                id="option1"
+                id={fourAnswerOptions[0].id}
                 onChange={handlefourAnswerValue}
               />
             </div>
@@ -277,15 +290,15 @@ const Index = ({ editQuestion }) => {
             <div className="option">
               <input
                 type="text"
-                id="option2"
+                id={fourAnswerOptions[1].id}
                 value={fourAnswerOptions[1].title}
-                onChange={handleOptionsLabel}
+                onChange={handlefourAnswerTitle}
               />
               <p>گزینه 2</p>
               <input
                 type="checkbox"
                 checked={fourAnswerOptions[1].value}
-                id="option2"
+                id={fourAnswerOptions[1].id}
                 onChange={handlefourAnswerValue}
               />
             </div>
@@ -294,15 +307,15 @@ const Index = ({ editQuestion }) => {
             <div className="option">
               <input
                 type="text"
-                id="option3"
+                id={fourAnswerOptions[2].id}
                 value={fourAnswerOptions[2].title}
-                onChange={handleOptionsLabel}
+                onChange={handlefourAnswerTitle}
               />
               <p>گزینه 3</p>
               <input
                 type="checkbox"
                 checked={fourAnswerOptions[2].value}
-                id="option3"
+                id={fourAnswerOptions[2].id}
                 onChange={handlefourAnswerValue}
               />
             </div>
@@ -311,15 +324,15 @@ const Index = ({ editQuestion }) => {
             <div className="option">
               <input
                 type="text"
-                id="option4"
+                id={fourAnswerOptions[3].id}
                 value={fourAnswerOptions[3].title}
-                onChange={handleOptionsLabel}
+                onChange={handlefourAnswerTitle}
               />
               <p>گزینه 4</p>
               <input
                 type="checkbox"
                 checked={fourAnswerOptions[3].value}
-                id="option4"
+                id={fourAnswerOptions[3].id}
                 onChange={handlefourAnswerValue}
               />
             </div>
