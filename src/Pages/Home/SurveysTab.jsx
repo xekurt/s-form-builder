@@ -88,6 +88,8 @@ const SurveysTab = () => {
               ? "چهارگزینه‌ای"
               : type === "truthy"
               ? "صحیح و غلط"
+              : type === "multipleChoice"
+              ? "چندجوابی"
               : "تشریحی"}
           </span>
         </div>
