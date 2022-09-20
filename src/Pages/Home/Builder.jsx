@@ -4,7 +4,7 @@ import { moveQuestion, removeQuestion } from "../../Store/Slices/MainSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
 
-const SurveysTab = () => {
+const Builder = () => {
   const state = useSelector((state) => state);
   const { main } = state;
   const { surveys, uncategorizedQuestions: questions } = main;
@@ -99,10 +99,10 @@ const SurveysTab = () => {
   };
 
   return (
-    <section className="surveys__tab">
-      <article className="column">
+    <section className="builder">
+      <article className="questions__column">
         <h4> سوالات دسته بندی نشده</h4>
-        <div className="surveys">
+        <div className="questions__wrapper">
           {questions.length > 0 ? (
             questions.map(renderQuestions)
           ) : (
@@ -123,9 +123,9 @@ const SurveysTab = () => {
           )}
         </div>
       </article> */}
-      <article className="column">
+      <article className="surveys__column">
         <h4>همه پرسشنامه‌ها</h4>
-        <div className="surveys">
+        <div className="surveys__wrapper">
           {surveys.length > 0 ? (
             surveys.map(renderSurveys)
           ) : (
@@ -140,4 +140,4 @@ const SurveysTab = () => {
   );
 };
 
-export default SurveysTab;
+export default Builder;

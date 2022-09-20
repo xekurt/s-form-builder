@@ -2,7 +2,7 @@ import React from "react";
 
 import "./styles.css";
 import { useState } from "react";
-import SurveysTab from "./SurveysTab";
+import Builder from "./Builder";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState("surveys");
@@ -20,7 +20,7 @@ const Home = () => {
         >
           پرسشنامه‌ها
         </button> */}
-        <SurveysTab />
+        <Builder />
       </div>
     </section>
   );

@@ -12,7 +12,6 @@
   position: relative;
 }
 .tabs__buttons button {
-  width: 40%;
   height: 35px;
   font-size: large;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -47,33 +46,50 @@
   transform: translateX(-100%);
 }
 
-.surveys__tab {
+.builder {
   width: 100%;
   margin-top: 2rem;
   padding: 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-items: flex-start;
 }
-.column {
+.questions__column {
   text-align: center;
   width: 45%;
   min-height: 100px;
+  position: relative;
 }
-.surveys {
+.surveys__column {
+  text-align: center;
+  width: 45%;
+  min-height: 100px;
+  position: relative;
+}
+.surveys__wrapper {
   margin: 1rem auto;
   min-height: 100px;
   max-height: 400px;
   overflow-y: scroll;
   border: 1px solid slategray;
-  position: relative;
+
+  padding: 0rem 1rem 2rem 1rem;
+}
+.questions__wrapper {
+  margin: 1rem auto;
+  min-height: 100px;
+  max-height: 400px;
+  overflow-y: scroll;
+  border: 1px solid slategray;
+
   padding: 0rem 1rem 2rem 1rem;
 }
 
 .add__button {
   position: absolute;
   bottom: 0;
-  z-index: 10;
   width: 100%;
+  z-index: 10;
   left: 0;
   background-color: #66a868;
   color: white;
@@ -84,8 +100,8 @@
   position: absolute;
   bottom: 0;
   z-index: 10;
-  width: 100%;
   left: 0;
+  width: 100%;
   background-color: #219ebc;
   color: white;
   border-radius: 0;
@@ -112,7 +128,7 @@
   align-items: center;
   padding: 0.5rem;
   text-align: end;
-  cursor: pointer;
+  cursor: grab;
   margin: 0.5rem auto;
   border: 1px solid #93b7be;
   background-color: #a2d2ff;
@@ -136,6 +152,7 @@
   font-size: 20px;
   padding-bottom: 4px;
   margin-right: 0.4rem;
+  cursor: pointer;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
