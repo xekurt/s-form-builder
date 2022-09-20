@@ -113,7 +113,7 @@ const SurveysTab = () => {
           </button>
         </div>
       </article>
-      <article className="column">
+      {/* <article className="column">
         <h4> سوالات پرسشنامه : {selectedSurvey?.title}</h4>
         <div className="surveys">
           {selectedSurvey ? (
@@ -122,7 +122,7 @@ const SurveysTab = () => {
             <p style={{ margin: "1rem auto" }}>یک پرسشنامه انتخاب کنید</p>
           )}
         </div>
-      </article>
+      </article> */}
       <article className="column">
         <h4>همه پرسشنامه‌ها</h4>
         <div className="surveys">

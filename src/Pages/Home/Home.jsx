@@ -7,13 +7,10 @@ import SurveysTab from "./SurveysTab";
 const Home = () => {
   const [activeTab, setActiveTab] = useState("surveys");
 
-  const Tab = {
-    surveys: <SurveysTab />,
-  };
   return (
     <section className="home__container">
       <div className="tabs__buttons">
-        <div className={`active ${activeTab === "stats" && "left"} `}></div>
+        {/* <div className={`active ${activeTab === "stats" && "left"} `}></div>
         <button className="stats__button" onClick={() => setActiveTab("stats")}>
           گزارشات
         </button>
@@ -22,9 +19,9 @@ const Home = () => {
           onClick={() => setActiveTab("surveys")}
         >
           پرسشنامه‌ها
-        </button>
+        </button> */}
+        <SurveysTab />
       </div>
-      {Tab[activeTab]}
     </section>
   );
 };

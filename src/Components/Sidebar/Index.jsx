@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./styles.css";
 const Index = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -16,7 +17,9 @@ const Index = () => {
       </div>
       <ul className="page__items">
         <li>پرسشنامه</li>
-        <li>پروفایل</li>
+        <Link to="analytics">
+          <li>پروفایل</li>
+        </Link>
         <li>خروج</li>
       </ul>
     </div>
