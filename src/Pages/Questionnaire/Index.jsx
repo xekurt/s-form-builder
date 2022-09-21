@@ -5,6 +5,7 @@ import { useData } from "../../hooks/useData";
 import "./styles.css";
 const Index = () => {
   const { surveys } = useData();
+
   const [selectedSurvey, setSelectedSurvey] = useState(null);
   const [selectedSurveyId, setSelectedSurveyId] = useState(null);
 

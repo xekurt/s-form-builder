@@ -15,13 +15,20 @@ const Index = ({ children }) => {
     if (modal) {
       setModalDetails({ ...modal });
     }
+    return () => {
+      setModalDetails({ name: "", type: "" });
+    };
   }, [modal]);
 
   const dispatch = useDispatch();
 
   const modalComponents = {
-    survey: (type) => <AddSurveyModal type={type} />,
-    question: (type) => <AddQuestionModal type={type} />,
+    survey: (type) => {
+      return <AddSurveyModal type={type} />;
+    },
+    question: (type) => {
+      return <AddQuestionModal type={type} />;
+    },
   };
 
   const handleRemoveModal = () => {
@@ -36,8 +43,9 @@ const Index = ({ children }) => {
             <span className="close__btn" onClick={handleRemoveModal}>
               ×
             </span>
-            {modalComponents[modalDetails.name] &&
-              modalComponents[modalDetails.name](modalDetails.type)}
+            {modalComponents[modalDetails.name]
+              ? modalComponents[modalDetails.name](modalDetails.type)
+              : null}
           </div>
         </div>
       )}

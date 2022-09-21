@@ -7,12 +7,12 @@ import { removeModal } from "../../Store/Slices/ModalSlice";
 import "./styles.css";
 import { useEffect } from "react";
 
-const Index = ({ editSurvey }) => {
+const Index = ({ editSurvey, type }) => {
   const dispatch = useDispatch();
   const [error, setError] = useState("initial");
   const [surveyData, setSurveyData] = useState({
     id: generateRandom(),
-    type: "",
+    type,
     title: "",
     desc: "",
     startDate: "",
