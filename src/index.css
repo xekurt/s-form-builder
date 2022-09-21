@@ -40,9 +40,6 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
-button:focus {
-  background-color: aliceblue;
-}
 ul li {
   list-style: none;
 }

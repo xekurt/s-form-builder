@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { addQuestion } from "../../Store/Slices/MainSlice";
 import { removeModal } from "../../Store/Slices/ModalSlice";
 
-const Index = ({ editQuestion }) => {
+const Index = ({ editQuestion, type }) => {
   const dispatch = useDispatch();
   const [error, setError] = useState("initial");
   const [questionData, setQuestionData] = useState({
@@ -169,43 +169,45 @@ const Index = ({ editQuestion }) => {
 
   return (
     <>
-      <div className="radio__container">
-        <label style={{ color: error === "for" && "red" }}>
-          تیپ سوال را مشخص کنید *
-        </label>
-        <div className="radio__items">
-          <div className="radio__item">
-            <input
-              type="radio"
-              id="azmoon"
-              value="azmoon"
-              checked={questionData.for === "azmoon"}
-              onChange={() => {
-                setQuestionData((prevState) => ({
-                  ...prevState,
-                  for: "azmoon",
-                }));
-              }}
-            />
-            <label htmlFor="azmoon">آزمون</label>
-          </div>
-          <div className="radio__item">
-            <input
-              type="radio"
-              id="normal"
-              value="normal"
-              checked={questionData.for === "normal"}
-              onChange={() => {
-                setQuestionData((prevState) => ({
-                  ...prevState,
-                  for: "normal",
-                }));
-              }}
-            />
-            <label htmlFor="normal">معمولی</label>
+      {!type && (
+        <div className="radio__container">
+          <label style={{ color: error === "for" && "red" }}>
+            تیپ سوال را مشخص کنید *
+          </label>
+          <div className="radio__items">
+            <div className="radio__item">
+              <input
+                type="radio"
+                id="azmoon"
+                value="azmoon"
+                checked={questionData.for === "azmoon"}
+                onChange={() => {
+                  setQuestionData((prevState) => ({
+                    ...prevState,
+                    for: "azmoon",
+                  }));
+                }}
+              />
+              <label htmlFor="azmoon">آزمون</label>
+            </div>
+            <div className="radio__item">
+              <input
+                type="radio"
+                id="normal"
+                value="normal"
+                checked={questionData.for === "normal"}
+                onChange={() => {
+                  setQuestionData((prevState) => ({
+                    ...prevState,
+                    for: "normal",
+                  }));
+                }}
+              />
+              <label htmlFor="normal">معمولی</label>
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <div className="box">
         <label htmlFor="title" style={{ color: error === "title" && "red" }}>
           * تیتر سوال را وارد نمایید

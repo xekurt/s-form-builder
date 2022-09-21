@@ -1,10 +1,10 @@
 import React from "react";
 import QuestionForm from "../QuestionForm/Index";
 
-const AddQuestionModal = () => {
+const AddQuestionModal = ({ type }) => {
   return (
     <section className="modal__container">
-      <QuestionForm />
+      <QuestionForm type={type} />
     </section>
   );
 };

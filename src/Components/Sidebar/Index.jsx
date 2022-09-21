@@ -17,10 +17,16 @@ const Index = () => {
         </span>
       </div>
       <ul className="page__items">
-        <Link to="/">
-          <li>پرسشنامه ساز</li>
+        <Link to="/exams">
+          <li>مدیریت آزمون</li>
         </Link>
 
+        <Link to="/questionnaire">
+          <li>مدیریت پرسشنامه</li>
+        </Link>
+        <Link to="/questions_bank">
+          <li>بانک سوالات</li>
+        </Link>
         <Link to="analytics">
           <li>گزارشات</li>
         </Link>
