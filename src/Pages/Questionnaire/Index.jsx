@@ -8,7 +8,6 @@ import "./styles.css";
 const Index = () => {
   const dispatch = useDispatch();
   const { surveys } = useData();
-  console.info(surveys);
   const [questionnaires, setQuestionnaires] = useState();
   const [movementDetails, setMovementDetails] = useState({
     parentId: "",
