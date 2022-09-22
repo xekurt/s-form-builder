@@ -4,7 +4,13 @@ import { addModal } from "../../Store/Slices/ModalSlice";
 import { useDispatch } from "react-redux";
 import "./styles.css";
 
-const List = ({ type, surveysData, handleSelectSurvey, selectedSurveyId }) => {
+const List = ({
+  type,
+  surveysData,
+  handleSelectSurvey,
+  selectedSurveyId,
+  handleEndMovement,
+}) => {
   const [movementDetails, setMovementDetails] = useState({
     originId: "",
     destinationId: "",
@@ -16,9 +22,6 @@ const List = ({ type, surveysData, handleSelectSurvey, selectedSurveyId }) => {
     dispatch(addModal({ name: "survey", type }));
   };
 
-  const handleDrop = (id) => {
-    setMovementDetails((prevState) => ({ ...prevState, destinationId: id }));
-  };
   const handleDragOver = (e) => {
     e.preventDefault();
   };
@@ -33,7 +36,7 @@ const List = ({ type, surveysData, handleSelectSurvey, selectedSurveyId }) => {
         key={index}
         onClick={() => handleSelectSurvey(id)}
         onDragOver={handleDragOver}
-        onDrop={() => handleDrop(id)}
+        onDrop={() => handleEndMovement(id)}
       >
         <p>{title}</p>
       </div>

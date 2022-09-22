@@ -5,7 +5,12 @@ import { addModal } from "../../Store/Slices/ModalSlice";
 import preview from "../../assets/icons/preview.png";
 import "./styles.css";
 
-const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
+const Index = ({
+  type = "free",
+  selectedSurvey,
+  uncategorizedQuestions,
+  handleStartMovement,
+}) => {
   const dispatch = useDispatch();
 
   const [showError, setShowError] = useState(null);
@@ -23,7 +28,7 @@ const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
         className="question__item"
         key={index}
         draggable
-        onDragStart={handleDragStart}
+        onDragStart={() => handleDragStart(id, parentId)}
         onDrop={() => handleDrop(id)}
         onDragOver={handleDragOver}
       >
@@ -79,9 +84,9 @@ const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
   }, [selectedSurvey]);
 
   // DRAG AND DROP LOGIC
-  const handleDragStart = (e) => {
-    const { id } = e.target;
+  const handleDragStart = (id, parentId) => {
     setSortDetails((prevState) => ({ ...prevState, originId: id }));
+    handleStartMovement(id, parentId);
   };
   const handleDrop = (id) => {
     setSortDetails((prevState) => ({ ...prevState, destinationId: id }));

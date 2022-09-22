@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import List from "../../Components/List/List";
 import Questions from "../../Components/Questions/Index";
 import { useData } from "../../hooks/useData";
+import { moveQuestion } from "../../Store/Slices/MainSlice";
 import "./styles.css";
 const Index = () => {
+  const dispatch = useDispatch();
   const { surveys } = useData();
+  console.info(surveys);
   const [questionnaires, setQuestionnaires] = useState();
+  const [movementDetails, setMovementDetails] = useState({
+    parentId: "",
+    questionId: "",
+    destinationId: "",
+  });
   const [selectedSurvey, setSelectedSurvey] = useState(null);
   const [selectedSurveyId, setSelectedSurveyId] = useState(null);
 
-  // Filter all surveys and access exams
+  // Filter out questionnaires from surveys
   useEffect(() => {
     setQuestionnaires(
       surveys.filter((survey) => survey.type === "questionnaire")
@@ -23,14 +32,43 @@ const Index = () => {
   const handleSelectSurvey = (id) => {
     setSelectedSurveyId(id);
   };
+
+  // Movement logic
+  const handleDragStart = (id, parentId) => {
+    setMovementDetails((prevState) => ({
+      ...prevState,
+      questionId: id,
+      parentId,
+    }));
+  };
+  const handleDrop = (id) => {
+    setMovementDetails((prevState) => ({ ...prevState, destinationId: id }));
+  };
+
+  useEffect(() => {
+    if (
+      movementDetails.destinationId &&
+      movementDetails.questionId &&
+      movementDetails.parentId
+    ) {
+      dispatch(moveQuestion({ ...movementDetails }));
+      setMovementDetails({ destinationId: "", questionId: "", parentId: "" });
+    }
+  }, [movementDetails, dispatch]);
+
   return (
     <section className="page">
-      <Questions type="questionnaire" selectedSurvey={selectedSurvey} />
+      <Questions
+        type="questionnaire"
+        selectedSurvey={selectedSurvey}
+        handleStartMovement={handleDragStart}
+      />
       <List
         type="questionnaire"
         surveysData={questionnaires}
         handleSelectSurvey={handleSelectSurvey}
         selectedSurveyId={selectedSurveyId}
+        handleEndMovement={handleDrop}
       />
     </section>
   );

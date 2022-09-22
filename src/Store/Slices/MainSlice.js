@@ -49,23 +49,27 @@ export const mainSlice = createSlice({
     },
     moveQuestion: (state, action) => {
       const { payload } = action;
-      const target = state.uncategorizedQuestions.find((item) => {
-        return item.id === payload.originId;
-      });
+      const { parentId, questionId, destinationId } = payload;
+      const targetParent = state.surveys.find(
+        (survey) => survey.id === parentId
+      );
+      const targetQuestion = targetParent.questions.find(
+        (question) => question.id === questionId
+      );
       state.surveys = state.surveys.map((survey) => {
-        if (survey.id === payload.destinationId) {
-          return {
-            ...survey,
-            questions: [
-              ...survey.questions,
-              { ...target, parentId: payload.destinationId },
-            ],
-          };
+        if (survey.id === parentId) {
+          survey.questions = survey.questions.filter(
+            (item) => item.id !== questionId
+          );
+          return survey;
+        } else if (survey.id === destinationId) {
+          survey.questions = [
+            ...survey.questions,
+            { ...targetQuestion, parentId: destinationId },
+          ];
+          return survey;
         } else return survey;
       });
-      state.uncategorizedQuestions = state.uncategorizedQuestions.filter(
-        (item) => item.id !== payload.originId
-      );
     },
     sortQuestions: (state, action) => {
       const { payload } = action;
