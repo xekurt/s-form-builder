@@ -10,6 +10,7 @@ const Index = ({ children }) => {
   const [modalDetails, setModalDetails] = useState({
     name: "",
     type: "",
+    parentId: "",
   });
   useEffect(() => {
     if (modal) {
@@ -26,8 +27,8 @@ const Index = ({ children }) => {
     survey: (type) => {
       return <AddSurveyModal type={type} />;
     },
-    question: (type) => {
-      return <AddQuestionModal type={type} />;
+    question: (type, parentId) => {
+      return <AddQuestionModal type={type} parentId={parentId} />;
     },
   };
 
@@ -43,9 +44,11 @@ const Index = ({ children }) => {
             <span className="close__btn" onClick={handleRemoveModal}>
               ×
             </span>
-            {modalComponents[modalDetails.name]
-              ? modalComponents[modalDetails.name](modalDetails.type)
-              : null}
+            {modalComponents[modalDetails.name] &&
+              modalComponents[modalDetails.name](
+                modalDetails.type,
+                modalDetails.parentId
+              )}
           </div>
         </div>
       )}

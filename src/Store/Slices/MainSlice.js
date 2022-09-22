@@ -16,15 +16,25 @@ export const mainSlice = createSlice({
     },
     addQuestion: (state, action) => {
       const { payload } = action;
-      state.uncategorizedQuestions.push(payload);
+
+      if (payload.parentId) {
+        state.surveys = state.surveys.map((survey) => {
+          if (survey.id === payload.parentId) {
+            survey.questions = [...survey.questions, payload];
+            return survey;
+          } else return survey;
+        });
+      } else {
+        state.uncategorizedQuestions.push(payload);
+      }
     },
     removeQuestion: (state, action) => {
       const {
-        payload: { surveyId, id },
+        payload: { parentId, id },
       } = action;
-      if (surveyId) {
+      if (parentId) {
         state.surveys = state.surveys.map((survey) => {
-          if (survey.id === surveyId) {
+          if (survey.id === parentId) {
             survey.questions = survey.questions.filter(
               (question) => question.id !== id
             );
@@ -48,7 +58,7 @@ export const mainSlice = createSlice({
             ...survey,
             questions: [
               ...survey.questions,
-              { ...target, surveyId: payload.destinationId },
+              { ...target, parentId: payload.destinationId },
             ],
           };
         } else return survey;

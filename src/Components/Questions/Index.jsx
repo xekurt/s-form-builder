@@ -6,6 +6,7 @@ import "./styles.css";
 
 const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
   const dispatch = useDispatch();
+
   const [showError, setShowError] = useState(null);
   const [movementDetails, setMovementDetails] = useState({
     originId: "",
@@ -13,7 +14,7 @@ const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
   });
 
   const renderQuestions = (item, index) => {
-    const { title, type, id, surveyId } = item;
+    const { title, type, id, parentId } = item;
     return (
       <div
         id={id}
@@ -25,7 +26,7 @@ const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <span
             className="delete__icon"
-            onClick={() => handleDeleteQuestion(surveyId, id)}
+            onClick={() => handleDeleteQuestion(parentId, id)}
           >
             ×
           </span>
@@ -62,8 +63,8 @@ const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
     }
   };
 
-  const handleDeleteQuestion = (surveyId, id) => {
-    dispatch(removeQuestion({ surveyId, id }));
+  const handleDeleteQuestion = (parentId, id) => {
+    dispatch(removeQuestion({ parentId, id }));
   };
 
   useEffect(() => {
@@ -85,24 +86,22 @@ const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
   return (
     <article className="questions__column">
       <h4>
-        {type === "questionnaire" ? "سوالات پرسشنامه : " : "سوالات آزمون : "}
+        {type === "questionnaire"
+          ? "سوالات پرسشنامه : "
+          : type === "exam"
+          ? "سوالات آزمون : "
+          : "بانک سوالات"}
         {selectedSurvey?.title}
       </h4>
       <div className="questions__wrapper">
-        {selectedSurvey ? (
-          selectedSurvey.questions.map(renderQuestions)
-        ) : (
+        {selectedSurvey?.questions.map(renderQuestions) ?? (
           <p style={{ margin: "1rem auto", color: showError && "red" }}>
             {type === "questionnaire"
               ? " یک پرسشنامه انتخاب کنید"
               : "  یک آزمون انتخاب کنید"}
           </p>
         )}
-        {uncategorizedQuestions ? (
-          uncategorizedQuestions.map(renderQuestions)
-        ) : (
-          <p style={{ margin: "1rem auto" }}>هیچ سوالی ساخته نشده است</p>
-        )}
+        {uncategorizedQuestions?.map(renderQuestions)}
 
         <button className="add__question__btn" onClick={addQuestionModal}>
           اضافه کردن سوال

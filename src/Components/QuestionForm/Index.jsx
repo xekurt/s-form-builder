@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { addQuestion } from "../../Store/Slices/MainSlice";
 import { removeModal } from "../../Store/Slices/ModalSlice";
 
-const Index = ({ editQuestion, type }) => {
+const Index = ({ editQuestion, type, parentId }) => {
   const dispatch = useDispatch();
   const [error, setError] = useState("initial");
   const [questionData, setQuestionData] = useState({
@@ -15,7 +15,6 @@ const Index = ({ editQuestion, type }) => {
     title: "",
     for: "normal",
     type: "",
-    surveyId: "",
   });
   const [fourAnswerOptions, setfourAnswerOptions] = useState([
     { title: "", value: false, id: generateRandom() },
@@ -154,6 +153,7 @@ const Index = ({ editQuestion, type }) => {
     setError(tempError);
     if (tempError) return;
 
+    // Create proper form based on user filters
     let question = questionData;
     if (question.type === "fourAnswer") {
       question = { ...question, options: [...fourAnswerOptions] };
@@ -163,7 +163,12 @@ const Index = ({ editQuestion, type }) => {
       question = { ...question, options: [...multipleChoiceOptions] };
     }
 
-    dispatch(addQuestion(question));
+    // Check if form has a parent or not
+    if (parentId) {
+      dispatch(addQuestion({ ...question, parentId }));
+    } else {
+      dispatch(addQuestion(question));
+    }
     dispatch(removeModal());
   };
 
