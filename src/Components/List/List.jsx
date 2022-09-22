@@ -16,6 +16,13 @@ const List = ({ type, surveysData, handleSelectSurvey, selectedSurveyId }) => {
     dispatch(addModal({ name: "survey", type }));
   };
 
+  const handleDrop = (id) => {
+    setMovementDetails((prevState) => ({ ...prevState, destinationId: id }));
+  };
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
   // UI FUNCTIONS
   const renderSurveys = (item, index) => {
     const { title, id } = item;
@@ -25,8 +32,8 @@ const List = ({ type, surveysData, handleSelectSurvey, selectedSurveyId }) => {
         className={`survey__item ${selectedSurveyId === id && "selected"}`}
         key={index}
         onClick={() => handleSelectSurvey(id)}
-        // onDragOver={handleDragOver}
-        // onDrop={() => handleDrop(id)}
+        onDragOver={handleDragOver}
+        onDrop={() => handleDrop(id)}
       >
         <p>{title}</p>
       </div>

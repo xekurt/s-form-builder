@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { removeQuestion } from "../../Store/Slices/MainSlice";
+import { removeQuestion, sortQuestions } from "../../Store/Slices/MainSlice";
 import { addModal } from "../../Store/Slices/ModalSlice";
+import preview from "../../assets/icons/preview.png";
 import "./styles.css";
 
 const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
   const dispatch = useDispatch();
 
   const [showError, setShowError] = useState(null);
-  const [movementDetails, setMovementDetails] = useState({
+  const [sortDetails, setSortDetails] = useState({
+    parentId: "",
     originId: "",
     destinationId: "",
   });
@@ -22,6 +24,8 @@ const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
         key={index}
         draggable
         onDragStart={handleDragStart}
+        onDrop={() => handleDrop(id)}
+        onDragOver={handleDragOver}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
           <span
@@ -30,6 +34,9 @@ const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
           >
             ×
           </span>
+          <div className="preview__icon">
+            <img src={preview} alt="preview" />
+          </div>
 
           <span className="tag">
             {type === "fourAnswer"
@@ -72,16 +79,33 @@ const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
   }, [selectedSurvey]);
 
   // DRAG AND DROP LOGIC
+  const handleDragStart = (e) => {
+    const { id } = e.target;
+    setSortDetails((prevState) => ({ ...prevState, originId: id }));
+  };
   const handleDrop = (id) => {
-    setMovementDetails((prevState) => ({ ...prevState, destinationId: id }));
+    setSortDetails((prevState) => ({ ...prevState, destinationId: id }));
   };
   const handleDragOver = (e) => {
     e.preventDefault();
   };
-  const handleDragStart = (e) => {
-    const { id } = e.target;
-    setMovementDetails((prevState) => ({ ...prevState, originId: id }));
-  };
+
+  useEffect(() => {
+    if (
+      sortDetails.destinationId &&
+      sortDetails.originId &&
+      sortDetails.destinationId !== sortDetails.originId
+    ) {
+      dispatch(
+        sortQuestions({
+          parentId: selectedSurvey?.id || "",
+          origin: sortDetails.originId,
+          destination: sortDetails.destinationId,
+        })
+      );
+      setSortDetails({ parentId: "", originId: "", destinationId: "" });
+    }
+  }, [sortDetails, dispatch, selectedSurvey?.id]);
 
   return (
     <article className="questions__column">
