@@ -37,7 +37,7 @@ const List = ({ type, surveysData, handleSelectSurvey, selectedSurveyId }) => {
     <article className="surveys__column">
       <h4>{type === "questionnaire" ? "همه پرسشنامه‌ها" : "همه آزمون‌ها"}</h4>
       <div className="surveys__wrapper">
-        {surveysData.length > 0 ? (
+        {surveysData?.length > 0 ? (
           surveysData.map(renderSurveys)
         ) : (
           <p style={{ margin: "1rem auto" }}>

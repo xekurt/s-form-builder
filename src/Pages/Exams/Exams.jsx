@@ -9,8 +9,14 @@ import { useData } from "../../hooks/useData";
 
 const Exams = () => {
   const { surveys } = useData();
+  const [exams, setExams] = useState();
   const [selectedSurvey, setSelectedSurvey] = useState(null);
   const [selectedSurveyId, setSelectedSurveyId] = useState(null);
+  console.info(exams);
+  // Filter all surveys and access exams
+  useEffect(() => {
+    setExams(surveys.filter((survey) => survey.type === "exam"));
+  }, [surveys]);
 
   useEffect(() => {
     setSelectedSurvey(surveys.find((item) => item.id === selectedSurveyId));
@@ -25,7 +31,7 @@ const Exams = () => {
       <Questions type="exam" selectedSurvey={selectedSurvey} />
       <List
         type="exam"
-        surveysData={surveys}
+        surveysData={exams}
         handleSelectSurvey={handleSelectSurvey}
         selectedSurveyId={selectedSurveyId}
       />

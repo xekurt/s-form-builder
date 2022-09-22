@@ -5,9 +5,16 @@ import { useData } from "../../hooks/useData";
 import "./styles.css";
 const Index = () => {
   const { surveys } = useData();
-
+  const [questionnaires, setQuestionnaires] = useState();
   const [selectedSurvey, setSelectedSurvey] = useState(null);
   const [selectedSurveyId, setSelectedSurveyId] = useState(null);
+
+  // Filter all surveys and access exams
+  useEffect(() => {
+    setQuestionnaires(
+      surveys.filter((survey) => survey.type === "questionnaire")
+    );
+  }, [surveys]);
 
   useEffect(() => {
     setSelectedSurvey(surveys.find((item) => item.id === selectedSurveyId));
@@ -16,13 +23,12 @@ const Index = () => {
   const handleSelectSurvey = (id) => {
     setSelectedSurveyId(id);
   };
-
   return (
     <section className="page">
       <Questions type="questionnaire" selectedSurvey={selectedSurvey} />
       <List
         type="questionnaire"
-        surveysData={surveys}
+        surveysData={questionnaires}
         handleSelectSurvey={handleSelectSurvey}
         selectedSurveyId={selectedSurveyId}
       />
