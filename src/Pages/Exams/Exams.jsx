@@ -12,7 +12,7 @@ const Exams = () => {
   const [exams, setExams] = useState();
   const [selectedSurvey, setSelectedSurvey] = useState(null);
   const [selectedSurveyId, setSelectedSurveyId] = useState(null);
-  console.info(exams);
+
   // Filter all surveys and access exams
   useEffect(() => {
     setExams(surveys.filter((survey) => survey.type === "exam"));

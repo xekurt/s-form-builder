@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeQuestion } from "../../Store/Slices/MainSlice";
 import { addModal } from "../../Store/Slices/ModalSlice";
 import "./styles.css";
 
-const Index = ({
-  type = "questionnaire",
-  selectedSurvey,
-  uncategorizedQuestions,
-}) => {
+const Index = ({ type = "free", selectedSurvey, uncategorizedQuestions }) => {
   const dispatch = useDispatch();
-
+  const [showError, setShowError] = useState(null);
   const [movementDetails, setMovementDetails] = useState({
     originId: "",
     destinationId: "",
@@ -49,12 +45,30 @@ const Index = ({
     );
   };
   const addQuestionModal = () => {
-    dispatch(addModal({ name: "question", type }));
+    // if your in questions bank page then this line will be executed
+    if (type === "free") {
+      dispatch(addModal({ name: "question", type }));
+    }
+    // else if your in questionnaire or exams page you must have selected a (questionnaire or exam) in order to be able to add a new question
+    else {
+      if (!selectedSurvey) {
+        setShowError(true);
+      } else {
+        setShowError(false);
+        dispatch(
+          addModal({ name: "question", type, parentId: selectedSurvey.id })
+        );
+      }
+    }
   };
 
   const handleDeleteQuestion = (surveyId, id) => {
     dispatch(removeQuestion({ surveyId, id }));
   };
+
+  useEffect(() => {
+    setShowError(false);
+  }, [selectedSurvey]);
 
   // DRAG AND DROP LOGIC
   const handleDrop = (id) => {
@@ -78,7 +92,7 @@ const Index = ({
         {selectedSurvey ? (
           selectedSurvey.questions.map(renderQuestions)
         ) : (
-          <p style={{ margin: "1rem auto" }}>
+          <p style={{ margin: "1rem auto", color: showError && "red" }}>
             {type === "questionnaire"
               ? " یک پرسشنامه انتخاب کنید"
               : "  یک آزمون انتخاب کنید"}
@@ -89,6 +103,7 @@ const Index = ({
         ) : (
           <p style={{ margin: "1rem auto" }}>هیچ سوالی ساخته نشده است</p>
         )}
+
         <button className="add__question__btn" onClick={addQuestionModal}>
           اضافه کردن سوال
         </button>
