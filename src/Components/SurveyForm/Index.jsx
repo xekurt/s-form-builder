@@ -2,7 +2,7 @@ import React from "react";
 import { generateRandom } from "../../utils/randomId";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addSurvey } from "../../Store/Slices/MainSlice";
+import { addSurvey, updateSurvey } from "../../Store/Slices/MainSlice";
 import { removeModal } from "../../Store/Slices/ModalSlice";
 import "./styles.css";
 import { useEffect } from "react";
@@ -36,7 +36,7 @@ const Index = ({ editSurvey, type }) => {
     } else setSurveyData((prevState) => ({ ...prevState, [id]: value }));
   };
 
-  const handleCreateSurvey = () => {
+  const handleSubmit = () => {
     const validateForm = (data) => {
       if (data.title.trim().length === 0) {
         return "title";
@@ -53,12 +53,18 @@ const Index = ({ editSurvey, type }) => {
     const tempErr = validateForm(surveyData);
     setError(tempErr);
     if (tempErr) return;
-    dispatch(addSurvey(surveyData));
+
+    if (editSurvey) {
+      dispatch(updateSurvey(surveyData));
+    } else {
+      dispatch(addSurvey(surveyData));
+    }
     dispatch(removeModal());
   };
   useEffect(() => {
     editSurvey && setSurveyData((prevState) => ({ ...editSurvey }));
   }, [editSurvey]);
+
   return (
     <>
       <div className="box">
@@ -126,7 +132,7 @@ const Index = ({ editSurvey, type }) => {
           <img width="48px" height="48px" src={surveyData.picture} alt="pic" />
         )}
       </div>
-      <button className="create__button" onClick={handleCreateSurvey}>
+      <button className="create__button" onClick={handleSubmit}>
         {editSurvey ? "ذخیره" : "ایجاد پرسشنامه"}
       </button>
     </>

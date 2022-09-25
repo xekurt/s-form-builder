@@ -31,6 +31,9 @@ const Index = ({ children }) => {
     question: (props) => {
       return <AddQuestionModal {...props} />;
     },
+    updateSurvey: (props) => {
+      return <AddSurveyModal editSurvey {...props} />;
+    },
     updateQuestion: (props) => {
       return <AddQuestionModal editQuestion {...props} />;
     },

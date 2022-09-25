@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { addModal } from "../../Store/Slices/ModalSlice";
 import { useDispatch } from "react-redux";
-import preview from "../../assets/icons/preview.png";
+import edit from "../../assets/icons/edit.png";
 import { removeSurvey } from "../../Store/Slices/MainSlice";
 import "./styles.css";
 
@@ -26,6 +26,10 @@ const Surveys = ({
     dispatch(removeSurvey({ id }));
   };
 
+  const handleEditSurvey = (id) => {
+    dispatch(addModal({ name: "updateSurvey", id }));
+  };
+
   // UI FUNCTIONS
   const renderSurveys = (item, index) => {
     const { title, id } = item;
@@ -42,9 +46,9 @@ const Surveys = ({
           <span className="delete__icon" onClick={() => handleDeleteSurvey(id)}>
             ×
           </span>
-          {/* <div className="preview__icon">
-            <img src={preview} alt="preview" />
-          </div> */}
+          <div className="edit__icon" onClick={() => handleEditSurvey(id)}>
+            <img src={edit} alt="preview" />
+          </div>
         </div>
         <p>{title}</p>
       </div>

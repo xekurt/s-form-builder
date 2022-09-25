@@ -14,8 +14,16 @@ export const mainSlice = createSlice({
       } = action;
       state.surveys = state.surveys.filter((survey) => survey.id !== id);
     },
-    clearAllSurveys: (state, action) => {
-      // state.surveys = [];
+    updateSurvey: (state, action) => {
+      const { payload } = action;
+      state.surveys = state.surveys.map((survey) => {
+        if (survey.id === payload.id) {
+          return payload;
+        } else {
+          return survey;
+        }
+      });
+      console.info(payload);
     },
     addQuestion: (state, action) => {
       const { payload } = action;
@@ -140,6 +148,7 @@ export const mainSlice = createSlice({
 
 export const {
   addSurvey,
+  updateSurvey,
   removeSurvey,
   clearAllSurveys,
   addQuestion,
