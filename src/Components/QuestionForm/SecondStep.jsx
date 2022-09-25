@@ -12,10 +12,11 @@ const SecondStep = ({
   truthyOptions,
   handleTruthyChange,
   handleInput,
+  handleDeleteOption,
   error,
 }) => {
   return (
-    <>
+    <section className="second__step">
       {questionData.for === "exam" && (
         <div className="box">
           <label htmlFor="title" style={{ color: error === "title" && "red" }}>
@@ -104,10 +105,11 @@ const SecondStep = ({
       )}
       {questionData.type === "multipleChoice" && (
         <div className="options">
+          <p>گزینه‌ها را وارد کنید</p>
           {multipleChoiceOptions.map((option, i) => {
-            const { tag, index, id } = option;
+            const { id } = option;
             return (
-              <div className="box" key={i}>
+              <div className="box shadow" key={i}>
                 <div className="option">
                   <input
                     type="text"
@@ -117,7 +119,7 @@ const SecondStep = ({
                     }
                     onChange={handleMultipleChoiceTitle}
                   />
-                  <p>{tag + (index + 1)}</p>
+
                   <input
                     type="checkbox"
                     checked={
@@ -126,6 +128,12 @@ const SecondStep = ({
                     id={id}
                     onChange={handleMultipleChoiceValue}
                   />
+                  <span
+                    className="delete__option__icon"
+                    onClick={() => handleDeleteOption(id)}
+                  >
+                    ×
+                  </span>
                 </div>
               </div>
             );
@@ -134,28 +142,25 @@ const SecondStep = ({
         </div>
       )}
       {questionData.type === "truthy" && (
-        <div className="options">
-          <div className="box">
-            <div className="option">
-              <p>صحیح</p>
-              <input
-                type="checkbox"
-                id="true"
-                checked={truthyOptions}
-                onChange={handleTruthyChange}
-              />
-            </div>
+        <div className="truthy__container">
+          <div className="option">
+            <p>صحیح</p>
+            <input
+              type="checkbox"
+              id="true"
+              checked={truthyOptions}
+              onChange={handleTruthyChange}
+            />
           </div>
-          <div className="box">
-            <div className="option">
-              <p>غلط</p>
-              <input
-                type="checkbox"
-                id="false"
-                checked={!truthyOptions}
-                onChange={handleTruthyChange}
-              />
-            </div>
+
+          <div className="option">
+            <p>غلط</p>
+            <input
+              type="checkbox"
+              id="false"
+              checked={!truthyOptions}
+              onChange={handleTruthyChange}
+            />
           </div>
         </div>
       )}
@@ -164,7 +169,7 @@ const SecondStep = ({
           تیتر تمام گزینه‌ها را پر کرده و گزینه صحیح را مشخص کنید
         </p>
       )}
-    </>
+    </section>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeQuestion, sortQuestions } from "../../Store/Slices/MainSlice";
 import { addModal } from "../../Store/Slices/ModalSlice";
-import preview from "../../assets/icons/preview.png";
+import edit from "../../assets/icons/edit.png";
 import "./styles.css";
 
 const Index = ({
@@ -39,8 +39,8 @@ const Index = ({
           >
             ×
           </span>
-          <div className="preview__icon">
-            <img src={preview} alt="preview" />
+          <div className="edit__icon">
+            <img src={edit} alt="preview" />
           </div>
 
           <span className="tag">

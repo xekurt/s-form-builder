@@ -17,12 +17,16 @@
 }
 .options {
   width: 100%;
-  max-height: 200px;
-  overflow-y: scroll;
-  border: 1px solid slategray;
+  max-height: 300px;
+  overflow-y: auto;
   border-radius: 5px;
-  margin: 1rem auto;
+  margin: 1rem;
   padding: 0.4rem;
+  border: 1px solid slategray;
+}
+.options p {
+  text-align: end;
+  margin: 0.5rem 0.2rem;
 }
 .options input {
   width: 80%;
@@ -55,4 +59,25 @@
   margin: 1rem 0;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.delete__option__icon {
+  color: red;
+  margin: 0rem 1rem;
+  border-radius: 5px;
+  width: 28px;
+  height: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.second__step {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.truthy__container {
+  display: flex;
+  align-self: flex-end;
 }

@@ -32,7 +32,6 @@ const Index = ({ editQuestion, type, parentId }) => {
       tag: "گزینه",
       title: "",
       value: false,
-      index: 0,
     },
   ]);
   const [truthyOptions, setTruthyOptions] = useState(false);
@@ -86,13 +85,16 @@ const Index = ({ editQuestion, type, parentId }) => {
     setMultipleChoiceOptions((prevState) => [
       ...prevState,
       {
-        index: prevState[prevState.length - 1].index + 1,
         id: generateRandom(),
         title: "",
         value: false,
-        tag: "گزینه",
       },
     ]);
+  };
+  const handleDeleteOption = (id) => {
+    setMultipleChoiceOptions((prevState) =>
+      prevState.filter((item) => item.id !== id)
+    );
   };
   const handleMultipleChoiceTitle = (e) => {
     const { id, value } = e.target;
@@ -227,6 +229,7 @@ const Index = ({ editQuestion, type, parentId }) => {
           handlefourAnswerValue={handlefourAnswerValue}
           handleMultipleChoiceValue={handleMultipleChoiceValue}
           handleMultipleChoiceTitle={handleMultipleChoiceTitle}
+          handleDeleteOption={handleDeleteOption}
         />
       )}
       {error === "step" && (
