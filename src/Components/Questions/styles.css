@@ -1,14 +1,20 @@
 .questions__column {
   text-align: center;
-  width: 40%;
+  width: 60%;
   min-height: 100px;
   position: relative;
+  background-color: white;
+  padding: 0.8rem;
+  border-radius: 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .questions__wrapper {
   margin: 1rem auto;
   min-height: 100px;
-  max-height: 400px;
-  overflow-y: scroll;
+  max-height: 500px;
+  overflow-y: auto;
+  border-radius: 5px;
   border: 1px solid slategray;
   padding: 0rem 1rem 2rem 1rem;
 }
@@ -25,17 +31,15 @@
 }
 .question__item {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   padding: 0.5rem;
+  padding-bottom: 1rem;
   text-align: end;
   cursor: grab;
   margin: 0.5rem auto;
-  border: 1px solid #93b7be;
-  background-color: #a2d2ff;
-  border-radius: 5px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .question__item .tag {
   font-size: 8px;
@@ -43,24 +47,61 @@
   border-radius: 10px;
   padding: 4px;
 }
+.question__content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.question__content textarea {
+  width: 100%;
+  padding: 0.5rem;
+  direction: rtl;
+  margin-top: 0.3rem;
+  min-height: 40px;
+}
+.question__answer__area {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 2rem;
+}
+.four__answer__template {
+  display: flex;
+  width: 24%;
+  align-items: center;
+  justify-content: flex-end;
+}
+.truthy__answer__template {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+}
 .delete__icon {
   color: white;
   background-color: #e63946;
   text-align: center;
-  height: 24px;
-  width: 24px;
+  height: 16px;
+  width: 16px;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 14px;
   padding-bottom: 4px;
 
   cursor: pointer;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
-
+.question__actions {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
 .edit__icon {
-  width: 24px;
-  height: 24px;
+  height: 16px;
+  width: 16px;
+  border-radius: 10px;
+  font-size: 14px;
   padding: 4px;
   margin: 0rem 0.5rem;
   cursor: pointer;

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeQuestion, sortQuestions } from "../../Store/Slices/MainSlice";
 import { addModal } from "../../Store/Slices/ModalSlice";
-import edit from "../../assets/icons/edit.png";
+import QuestionItem from "./QuestionItem";
+
 import "./styles.css";
 
 const Index = ({
@@ -24,41 +25,49 @@ const Index = ({
     const { title, type, id, parentId } = item;
 
     return (
-      <div
-        id={id}
-        className="question__item"
-        key={index}
-        draggable
-        onDragStart={() => handleDragStart(id, parentId)}
-        onDrop={() => handleDrop(id)}
-        onDragOver={handleDragOver}
-      >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <span
-            className="delete__icon"
-            onClick={() => handleDeleteQuestion(parentId, id)}
-          >
-            ×
-          </span>
-          <div
-            className="edit__icon"
-            onClick={() => handleEditQestion(parentId, id)}
-          >
-            <img src={edit} alt="preview" />
-          </div>
+      <QuestionItem
+        {...item}
+        handleDrop={handleDrop}
+        handleDragOver={handleDragOver}
+        handleDragStart={handleDragStart}
+        handleEditQestion={handleEditQestion}
+        handleDeleteQuestion={handleDeleteQuestion}
+      />
+      // <div
+      //   id={id}
+      //   className="question__item"
+      //   key={index}
+      //   draggable
+      //   onDragStart={() => handleDragStart(id, parentId)}
+      //   onDrop={() => handleDrop(id)}
+      //   onDragOver={handleDragOver}
+      // >
+      //   <div style={{ display: "flex", alignItems: "center" }}>
+      //     <span
+      //       className="delete__icon"
+      //       onClick={() => handleDeleteQuestion(parentId, id)}
+      //     >
+      //       ×
+      //     </span>
+      //     <div
+      //       className="edit__icon"
+      //       onClick={() => handleEditQestion(parentId, id)}
+      //     >
+      //       <img src={edit} alt="preview" />
+      //     </div>
 
-          <span className="tag">
-            {type === "fourAnswer"
-              ? "چهارگزینه‌ای"
-              : type === "truthy"
-              ? "صحیح و غلط"
-              : type === "multipleChoice"
-              ? "چندجوابی"
-              : "تشریحی"}
-          </span>
-        </div>
-        <p>{title}</p>
-      </div>
+      //     <span className="tag">
+      //       {type === "fourAnswer"
+      //         ? "چهارگزینه‌ای"
+      //         : type === "truthy"
+      //         ? "صحیح و غلط"
+      //         : type === "multipleChoice"
+      //         ? "چندجوابی"
+      //         : "تشریحی"}
+      //     </span>
+      //   </div>
+      //   <p>{title}</p>
+      // </div>
     );
   };
   const addQuestionModal = () => {
@@ -134,7 +143,9 @@ const Index = ({
           <p style={{ margin: "1rem auto", color: showError && "red" }}>
             {type === "questionnaire"
               ? " یک پرسشنامه انتخاب کنید"
-              : "  یک آزمون انتخاب کنید"}
+              : type === "exam"
+              ? "  یک آزمون انتخاب کنید"
+              : "یک سوال اضافه کنید"}
           </p>
         )}
         {uncategorizedQuestions?.map(renderQuestions)}
