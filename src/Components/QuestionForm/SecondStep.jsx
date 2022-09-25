@@ -11,6 +11,7 @@ const SecondStep = ({
   handleAddOption,
   truthyOptions,
   handleTruthyChange,
+  handleInput,
   error,
 }) => {
   return (
@@ -21,11 +22,11 @@ const SecondStep = ({
             نمره سوال را وارد کنید
           </label>
           <input
-            type="text"
-            id="title"
-            name="title"
+            type="number"
+            id="defaultScore"
+            name="defaultScore"
             value={questionData.defaultScore}
-            // onChange={handleInput}
+            onChange={handleInput}
           />
         </div>
       )}

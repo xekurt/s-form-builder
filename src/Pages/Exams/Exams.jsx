@@ -1,24 +1,18 @@
 import React, { useEffect } from "react";
-
-import "./styles.css";
 import { useState } from "react";
 import Surveys from "../../Components/Surveys/Surveys";
 import Questions from "../../Components/Questions/Index";
-import { useDispatch } from "react-redux";
 import { useData } from "../../hooks/useData";
-import { moveQuestion } from "../../Store/Slices/MainSlice";
+import { useMovement } from "../../hooks/useMovement";
+import "./styles.css";
 
 const Exams = () => {
-  const dispatch = useDispatch();
   const { surveys } = useData();
   const [exams, setExams] = useState();
   const [selectedSurvey, setSelectedSurvey] = useState(null);
   const [selectedSurveyId, setSelectedSurveyId] = useState(null);
-  const [movementDetails, setMovementDetails] = useState({
-    parentId: "",
-    questionId: "",
-    destinationId: "",
-  });
+  const { handleDrop, handleDragStart } = useMovement();
+
   // Filter all surveys and access exams
   useEffect(() => {
     setExams(surveys.filter((survey) => survey.type === "exam"));
@@ -31,30 +25,6 @@ const Exams = () => {
   const handleSelectSurvey = (id) => {
     setSelectedSurveyId(id);
   };
-
-  // Movement logic
-  const handleDragStart = (id, parentId) => {
-    setMovementDetails((prevState) => ({
-      ...prevState,
-      questionId: id,
-      parentId,
-    }));
-  };
-  const handleDrop = (id) => {
-    setMovementDetails((prevState) => ({ ...prevState, destinationId: id }));
-  };
-
-  useEffect(() => {
-    if (
-      movementDetails.destinationId &&
-      movementDetails.questionId &&
-      movementDetails.parentId &&
-      movementDetails.destinationId !== movementDetails.parentId
-    ) {
-      dispatch(moveQuestion({ ...movementDetails }));
-      setMovementDetails({ destinationId: "", questionId: "", parentId: "" });
-    }
-  }, [movementDetails, dispatch]);
 
   return (
     <section className="page">

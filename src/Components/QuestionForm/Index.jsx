@@ -182,7 +182,7 @@ const Index = ({ editQuestion, type, parentId }) => {
     }
     setActiveStep(2);
   };
-  console.info(questionData);
+
   return (
     <>
       {activeStep === 1 ? (
@@ -195,6 +195,7 @@ const Index = ({ editQuestion, type, parentId }) => {
       ) : (
         <SecondStep
           questionData={questionData}
+          handleInput={handleInput}
           fourAnswerOptions={fourAnswerOptions}
           handlefourAnswerTitle={handlefourAnswerTitle}
           handlefourAnswerValue={handlefourAnswerValue}

@@ -9,7 +9,6 @@ export const mainSlice = createSlice({
       state.surveys.push(payload);
     },
     removeSurvey: (state, action) => {
-      console.info(action);
       const {
         payload: { id },
       } = action;
