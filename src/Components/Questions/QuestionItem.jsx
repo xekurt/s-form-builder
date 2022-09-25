@@ -14,7 +14,6 @@ const questionItem = ({
   handleDrop,
   handleEditQestion,
 }) => {
-  console.info(options);
   return (
     <div
       id={id}

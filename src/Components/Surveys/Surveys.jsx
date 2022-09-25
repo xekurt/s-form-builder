@@ -12,11 +12,6 @@ const Surveys = ({
   selectedSurveyId,
   handleEndMovement,
 }) => {
-  const [movementDetails, setMovementDetails] = useState({
-    originId: "",
-    destinationId: "",
-  });
-
   const dispatch = useDispatch();
 
   const addSurveyModal = () => {
@@ -47,9 +42,9 @@ const Surveys = ({
           <span className="delete__icon" onClick={() => handleDeleteSurvey(id)}>
             ×
           </span>
-          <div className="preview__icon">
+          {/* <div className="preview__icon">
             <img src={preview} alt="preview" />
-          </div>
+          </div> */}
         </div>
         <p>{title}</p>
       </div>

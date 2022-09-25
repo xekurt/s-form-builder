@@ -22,8 +22,6 @@ const Index = ({
   });
 
   const renderQuestions = (item, index) => {
-    const { title, type, id, parentId } = item;
-
     return (
       <QuestionItem
         {...item}
@@ -32,6 +30,7 @@ const Index = ({
         handleDragStart={handleDragStart}
         handleEditQestion={handleEditQestion}
         handleDeleteQuestion={handleDeleteQuestion}
+        key={index}
       />
       // <div
       //   id={id}

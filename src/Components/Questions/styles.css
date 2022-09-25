@@ -64,19 +64,20 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 2rem;
 }
 .four__answer__template {
   display: flex;
   width: 24%;
   align-items: center;
   justify-content: flex-end;
+  margin-top: 2rem;
 }
 .truthy__answer__template {
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: flex-end;
+  margin-top: 1rem;
 }
 .delete__icon {
   color: white;

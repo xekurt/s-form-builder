@@ -78,6 +78,7 @@ export const mainSlice = createSlice({
     },
     moveQuestion: (state, action) => {
       const { payload } = action;
+
       const { parentId, questionId, destinationId } = payload;
       const targetParent = state.surveys.find(
         (survey) => survey.id === parentId
