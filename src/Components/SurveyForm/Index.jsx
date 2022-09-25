@@ -97,7 +97,7 @@ const Index = ({ editSurvey, type }) => {
           *تاریخ شروع :
         </label>
         <input
-          type="text"
+          type="date"
           id="startDate"
           name="startDate"
           value={surveyData.startDate}
@@ -112,7 +112,7 @@ const Index = ({ editSurvey, type }) => {
           *تاریخ پایان :
         </label>
         <input
-          type="text"
+          type="date"
           id="endDate"
           name="endDate"
           value={surveyData.endDate}
@@ -127,6 +127,7 @@ const Index = ({ editSurvey, type }) => {
           id="picture"
           name="picture"
           onChange={handleChangeInput}
+          className="file__input"
         />
         {surveyData.picture && (
           <img width="48px" height="48px" src={surveyData.picture} alt="pic" />
