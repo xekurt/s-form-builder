@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { addModal } from "../../Store/Slices/ModalSlice";
-
 import { useDispatch } from "react-redux";
+import preview from "../../assets/icons/preview.png";
+import { removeSurvey } from "../../Store/Slices/MainSlice";
 import "./styles.css";
 
-const List = ({
+const Surveys = ({
   type,
   surveysData,
   handleSelectSurvey,
@@ -26,6 +27,10 @@ const List = ({
     e.preventDefault();
   };
 
+  const handleDeleteSurvey = (id) => {
+    dispatch(removeSurvey({ id }));
+  };
+
   // UI FUNCTIONS
   const renderSurveys = (item, index) => {
     const { title, id } = item;
@@ -38,6 +43,14 @@ const List = ({
         onDragOver={handleDragOver}
         onDrop={() => handleEndMovement(id)}
       >
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <span className="delete__icon" onClick={() => handleDeleteSurvey(id)}>
+            ×
+          </span>
+          <div className="preview__icon">
+            <img src={preview} alt="preview" />
+          </div>
+        </div>
         <p>{title}</p>
       </div>
     );
@@ -64,4 +77,4 @@ const List = ({
   );
 };
 
-export default List;
+export default Surveys;

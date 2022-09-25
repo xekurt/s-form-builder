@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import "./styles.css";
 import { useState } from "react";
-import List from "../../Components/List/List";
+import Surveys from "../../Components/Surveys/Surveys";
 import Questions from "../../Components/Questions/Index";
 import { useDispatch } from "react-redux";
 import { useData } from "../../hooks/useData";
@@ -62,7 +62,7 @@ const Exams = () => {
         selectedSurvey={selectedSurvey}
         handleStartMovement={handleDragStart}
       />
-      <List
+      <Surveys
         type="exam"
         surveysData={exams}
         handleSelectSurvey={handleSelectSurvey}

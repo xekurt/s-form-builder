@@ -5,6 +5,7 @@
   width: 600px;
   min-height: 400px;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   padding: 8px 16px;
 }

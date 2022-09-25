@@ -9,7 +9,11 @@ export const mainSlice = createSlice({
       state.surveys.push(payload);
     },
     removeSurvey: (state, action) => {
-      // state.surveys.pop();
+      console.info(action);
+      const {
+        payload: { id },
+      } = action;
+      state.surveys = state.surveys.filter((survey) => survey.id !== id);
     },
     clearAllSurveys: (state, action) => {
       // state.surveys = [];
@@ -110,6 +114,7 @@ export const mainSlice = createSlice({
 
 export const {
   addSurvey,
+  removeSurvey,
   clearAllSurveys,
   addQuestion,
   moveQuestion,

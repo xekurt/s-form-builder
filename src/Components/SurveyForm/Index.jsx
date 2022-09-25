@@ -63,7 +63,7 @@ const Index = ({ editSurvey, type }) => {
     <>
       <div className="box">
         <label htmlFor="title" style={{ color: error === "title" && "red" }}>
-          *عنوان پرسشنامه را وارد کنید :{" "}
+          {`عنوان ${type === "exam" ? "آزمون" : "پرسشنامه"} را وارد کنید`}
         </label>
         <input
           type="text"

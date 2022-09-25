@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import List from "../../Components/List/List";
+import Surveys from "../../Components/Surveys/Surveys";
 import Questions from "../../Components/Questions/Index";
 import { useData } from "../../hooks/useData";
 import { moveQuestion } from "../../Store/Slices/MainSlice";
@@ -62,7 +62,7 @@ const Index = () => {
         selectedSurvey={selectedSurvey}
         handleStartMovement={handleDragStart}
       />
-      <List
+      <Surveys
         type="questionnaire"
         surveysData={questionnaires}
         handleSelectSurvey={handleSelectSurvey}
