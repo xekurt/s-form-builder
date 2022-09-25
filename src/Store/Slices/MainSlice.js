@@ -23,7 +23,6 @@ export const mainSlice = createSlice({
           return survey;
         }
       });
-      console.info(payload);
     },
     addQuestion: (state, action) => {
       const { payload } = action;
