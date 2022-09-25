@@ -48,7 +48,8 @@ const Exams = () => {
     if (
       movementDetails.destinationId &&
       movementDetails.questionId &&
-      movementDetails.parentId
+      movementDetails.parentId &&
+      movementDetails.destinationId !== movementDetails.parentId
     ) {
       dispatch(moveQuestion({ ...movementDetails }));
       setMovementDetails({ destinationId: "", questionId: "", parentId: "" });
