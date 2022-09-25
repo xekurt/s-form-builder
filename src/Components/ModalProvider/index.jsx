@@ -11,6 +11,7 @@ const Index = ({ children }) => {
     name: "",
     type: "",
     parentId: "",
+    id: "",
   });
   useEffect(() => {
     if (modal) {
@@ -24,11 +25,14 @@ const Index = ({ children }) => {
   const dispatch = useDispatch();
 
   const modalComponents = {
-    survey: (type) => {
-      return <AddSurveyModal type={type} />;
+    survey: (props) => {
+      return <AddSurveyModal {...props} />;
     },
-    question: (type, parentId) => {
-      return <AddQuestionModal type={type} parentId={parentId} />;
+    question: (props) => {
+      return <AddQuestionModal {...props} />;
+    },
+    updateQuestion: (props) => {
+      return <AddQuestionModal editQuestion {...props} />;
     },
   };
 
@@ -45,10 +49,7 @@ const Index = ({ children }) => {
               ×
             </span>
             {modalComponents[modalDetails.name] &&
-              modalComponents[modalDetails.name](
-                modalDetails.type,
-                modalDetails.parentId
-              )}
+              modalComponents[modalDetails.name]({ ...modalDetails })}
           </div>
         </div>
       )}

@@ -50,6 +50,32 @@ export const mainSlice = createSlice({
         );
       }
     },
+    updateQuestion: (state, action) => {
+      const { payload } = action;
+
+      if (payload.parentId) {
+        state.surveys = state.surveys.map((survey) => {
+          if (survey.id === payload.parentId) {
+            survey.questions = survey.questions.map((question) => {
+              if (question.id === payload.id) {
+                return payload;
+              } else return question;
+            });
+          }
+          return survey;
+        });
+      } else {
+        state.uncategorizedQuestions = state.uncategorizedQuestions.map(
+          (question) => {
+            if (question.id === payload.id) {
+              return payload;
+            } else {
+              return question;
+            }
+          }
+        );
+      }
+    },
     moveQuestion: (state, action) => {
       const { payload } = action;
       const { parentId, questionId, destinationId } = payload;
@@ -119,5 +145,6 @@ export const {
   moveQuestion,
   removeQuestion,
   sortQuestions,
+  updateQuestion,
 } = mainSlice.actions;
 export default mainSlice.reducer;

@@ -22,6 +22,7 @@ const Index = ({
 
   const renderQuestions = (item, index) => {
     const { title, type, id, parentId } = item;
+
     return (
       <div
         id={id}
@@ -39,7 +40,10 @@ const Index = ({
           >
             ×
           </span>
-          <div className="edit__icon">
+          <div
+            className="edit__icon"
+            onClick={() => handleEditQestion(parentId, id)}
+          >
             <img src={edit} alt="preview" />
           </div>
 
@@ -77,6 +81,9 @@ const Index = ({
 
   const handleDeleteQuestion = (parentId, id) => {
     dispatch(removeQuestion({ parentId, id }));
+  };
+  const handleEditQestion = (parentId, id) => {
+    dispatch(addModal({ name: "updateQuestion", parentId, id, type }));
   };
 
   useEffect(() => {

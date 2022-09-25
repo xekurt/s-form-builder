@@ -4,12 +4,13 @@ import { useState } from "react";
 
 import "./styles.css";
 import { useDispatch } from "react-redux";
-import { addQuestion } from "../../Store/Slices/MainSlice";
+import { addQuestion, updateQuestion } from "../../Store/Slices/MainSlice";
 import { removeModal } from "../../Store/Slices/ModalSlice";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
+import { useEffect } from "react";
 
-const Index = ({ editQuestion, type, parentId }) => {
+const Index = ({ editQuestion = null, type, parentId }) => {
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = useState(1);
   const [error, setError] = useState("initial");
@@ -34,7 +35,22 @@ const Index = ({ editQuestion, type, parentId }) => {
       value: false,
     },
   ]);
+
   const [truthyOptions, setTruthyOptions] = useState(false);
+
+  // Editing
+  useEffect(() => {
+    if (editQuestion) {
+      setQuestionData({ ...editQuestion });
+      if (editQuestion.type === "fourAnswer") {
+        setfourAnswerOptions(editQuestion.options);
+      } else if (editQuestion.type === "multipleChoice") {
+        setMultipleChoiceOptions(editQuestion.options);
+      } else if (editQuestion.type === "truthy") {
+        setTruthyOptions(editQuestion.options);
+      }
+    }
+  }, [editQuestion]);
 
   const handleInput = (e) => {
     setError("");
@@ -120,7 +136,7 @@ const Index = ({ editQuestion, type, parentId }) => {
       })
     );
   };
-  const handleCreateQuestion = () => {
+  const handleSubmit = () => {
     const validateForm = (question, four, multiple) => {
       if (question.title.trim().length < 1) {
         return "title";
@@ -169,11 +185,15 @@ const Index = ({ editQuestion, type, parentId }) => {
       question = { ...question, options: [...multipleChoiceOptions] };
     }
 
-    // Check if form has a parent or not
-    if (parentId) {
-      dispatch(addQuestion({ ...question, parentId }));
+    if (editQuestion) {
+      dispatch(updateQuestion(question));
     } else {
-      dispatch(addQuestion(question));
+      // Check if form has a parent or not
+      if (parentId) {
+        dispatch(addQuestion({ ...question, parentId }));
+      } else {
+        dispatch(addQuestion(question));
+      }
     }
     dispatch(removeModal());
   };
@@ -187,23 +207,23 @@ const Index = ({ editQuestion, type, parentId }) => {
   const renderNextButtonContent = () => {
     if (activeStep === 1) {
       if (type === "questionnaire" && questionData.type === "descriptive")
-        return "ایجاد سوال";
+        return editQuestion ? "ذخیره" : "ایجاد سوال";
       else {
         return "مرحله بعد";
       }
     } else {
-      return "ایجاد سوال";
+      return editQuestion ? "ذخیره" : "ایجاد سوال";
     }
   };
   const handleNextButton = () => {
     if (activeStep === 1) {
       if (type === "questionnaire" && questionData.type === "descriptive")
-        handleCreateQuestion();
+        handleSubmit();
       else {
         handleNextPage();
       }
     } else {
-      handleCreateQuestion();
+      handleSubmit();
     }
   };
   return (
