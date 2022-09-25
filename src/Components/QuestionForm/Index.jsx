@@ -182,7 +182,28 @@ const Index = ({ editQuestion, type, parentId }) => {
     }
     setActiveStep(2);
   };
-
+  const renderNextButtonContent = () => {
+    if (activeStep === 1) {
+      if (type === "questionnaire" && questionData.type === "descriptive")
+        return "ایجاد سوال";
+      else {
+        return "مرحله بعد";
+      }
+    } else {
+      return "ایجاد سوال";
+    }
+  };
+  const handleNextButton = () => {
+    if (activeStep === 1) {
+      if (type === "questionnaire" && questionData.type === "descriptive")
+        handleCreateQuestion();
+      else {
+        handleNextPage();
+      }
+    } else {
+      handleCreateQuestion();
+    }
+  };
   return (
     <>
       {activeStep === 1 ? (
@@ -194,18 +215,18 @@ const Index = ({ editQuestion, type, parentId }) => {
         />
       ) : (
         <SecondStep
-          questionData={questionData}
+          error={error}
           handleInput={handleInput}
+          questionData={questionData}
+          truthyOptions={truthyOptions}
+          handleAddOption={handleAddOption}
           fourAnswerOptions={fourAnswerOptions}
+          handleTruthyChange={handleTruthyChange}
+          multipleChoiceOptions={multipleChoiceOptions}
           handlefourAnswerTitle={handlefourAnswerTitle}
           handlefourAnswerValue={handlefourAnswerValue}
           handleMultipleChoiceValue={handleMultipleChoiceValue}
-          multipleChoiceOptions={multipleChoiceOptions}
           handleMultipleChoiceTitle={handleMultipleChoiceTitle}
-          handleAddOption={handleAddOption}
-          truthyOptions={truthyOptions}
-          handleTruthyChange={handleTruthyChange}
-          error={error}
         />
       )}
       {error === "step" && (
@@ -222,11 +243,9 @@ const Index = ({ editQuestion, type, parentId }) => {
         </button>
         <button
           className="question__form__create__button"
-          onClick={() =>
-            activeStep === 1 ? handleNextPage() : handleCreateQuestion()
-          }
+          onClick={handleNextButton}
         >
-          {activeStep === 1 ? "مرحله بعد" : "ایجاد سوال"}
+          {renderNextButtonContent()}
         </button>
       </div>
     </>
