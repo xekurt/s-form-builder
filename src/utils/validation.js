@@ -30,3 +30,17 @@ export const validateFourAnswer = (options) => {
   }
   return true;
 };
+
+export const validateDate = (start, end) => {
+  if (start.trim().length === 0) {
+    return { error: "small", type: "startDate" };
+  }
+
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+
+  if (startDate > endDate) {
+    return "invalid";
+  }
+  return true;
+};
