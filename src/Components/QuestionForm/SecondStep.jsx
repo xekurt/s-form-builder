@@ -19,7 +19,10 @@ const SecondStep = ({
     <section className="second__step">
       {questionData.for === "exam" && (
         <div className="box">
-          <label htmlFor="title" style={{ color: error === "title" && "red" }}>
+          <label
+            htmlFor="title"
+            style={{ color: error.field === "defaultScore" && "red" }}
+          >
             نمره سوال را وارد کنید
           </label>
           <input
@@ -28,6 +31,9 @@ const SecondStep = ({
             name="defaultScore"
             value={questionData.defaultScore}
             onChange={handleInput}
+            style={{
+              border: error.field === "defaultScore" && "1px solid red",
+            }}
           />
         </div>
       )}
@@ -37,9 +43,14 @@ const SecondStep = ({
             <div className="option">
               <input
                 type="text"
-                id={fourAnswerOptions[0].id}
-                value={fourAnswerOptions[0].title}
+                id={fourAnswerOptions[0]?.id}
+                value={fourAnswerOptions[0]?.title}
                 onChange={handlefourAnswerTitle}
+                style={{
+                  border:
+                    error?.error?.id === fourAnswerOptions[0]?.id &&
+                    "1px solid red",
+                }}
               />
               <p>گزینه 1</p>
               <input
@@ -101,6 +112,13 @@ const SecondStep = ({
               />
             </div>
           </div>
+          {error.field === "fourAnswer" && (
+            <p style={{ color: "red", fontSize: "12px", textAlign: "center" }}>
+              {error.error === "title"
+                ? "لطفا تیتر همه گزینه‌ها را پر کنید"
+                : "لطفا یک جواب درست را تعیین کنید"}
+            </p>
+          )}
         </div>
       )}
       {questionData.type === "multipleChoice" && (
@@ -138,6 +156,17 @@ const SecondStep = ({
               </div>
             );
           })}
+          {error.field === "multipleChoice" && (
+            <p style={{ color: "red", fontSize: "12px", textAlign: "center" }}>
+              {error.error === "title"
+                ? "لطفا تیتر همه گزینه‌ها را پر کنید"
+                : error.error === "value"
+                ? "لطفا حداقل یک جواب درست را تعیین کنید"
+                : error.error === "value"
+                ? "تیتر گزینه‌ها نباید با علایم نگارشی شروع شود"
+                : ""}
+            </p>
+          )}
           <button onClick={handleAddOption}>اضافه کردن گزینه</button>
         </div>
       )}

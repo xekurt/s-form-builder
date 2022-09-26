@@ -9,7 +9,11 @@ import { removeModal } from "../../Store/Slices/ModalSlice";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
 import { useEffect } from "react";
-import { validateField } from "../../utils/validation";
+import {
+  validateField,
+  validateFourAnswer,
+  validateMultipleAnswer,
+} from "../../utils/validation";
 
 const Index = ({ editQuestion = null, type, parentId }) => {
   const dispatch = useDispatch();
@@ -99,6 +103,7 @@ const Index = ({ editQuestion = null, type, parentId }) => {
   };
 
   const handleAddOption = (e) => {
+    setError(true);
     setMultipleChoiceOptions((prevState) => [
       ...prevState,
       {
@@ -109,11 +114,13 @@ const Index = ({ editQuestion = null, type, parentId }) => {
     ]);
   };
   const handleDeleteOption = (id) => {
+    setError(true);
     setMultipleChoiceOptions((prevState) =>
       prevState.filter((item) => item.id !== id)
     );
   };
   const handleMultipleChoiceTitle = (e) => {
+    setError(true);
     const { id, value } = e.target;
     setMultipleChoiceOptions((prevState) =>
       prevState.map((item) => {
@@ -126,6 +133,7 @@ const Index = ({ editQuestion = null, type, parentId }) => {
     );
   };
   const handleMultipleChoiceValue = (e) => {
+    setError(true);
     const { id } = e.target;
     setMultipleChoiceOptions((prevState) =>
       prevState.map((item) => {
@@ -189,8 +197,43 @@ const Index = ({ editQuestion = null, type, parentId }) => {
         setActiveStep(2);
       }
     } else {
-      const validateSecondStep = () => {};
-      setActiveStep(2);
+      const validateSecondStep = (defaultScore, fourAnswer, multiple) => {
+        // validate score
+        const scoreError =
+          defaultScore.length < 1
+            ? {
+                error: "small",
+                field: "defaultScore",
+              }
+            : true;
+
+        // validate fouranswer titles and values
+        const fourAnswerError = validateFourAnswer(fourAnswer);
+        const multipleChoiceError = validateFourAnswer(multiple);
+
+        if (scoreError !== true) return scoreError;
+        if (questionData.type === "fourAnswer" && fourAnswerError !== true) {
+          return { error: fourAnswerError, field: "fourAnswer" };
+        }
+        if (
+          questionData.type === "multipleChoice" &&
+          multipleChoiceError !== true
+        ) {
+          return { error: multipleChoiceError, field: "multipleChoice" };
+        }
+
+        return true;
+      };
+
+      const tempError = validateSecondStep(
+        questionData.defaultScore,
+        fourAnswerOptions,
+        multipleChoiceOptions
+      );
+
+      setError(tempError);
+      if (tempError !== true) return;
+      handleSubmit();
     }
   };
   return (

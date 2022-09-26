@@ -1,7 +1,6 @@
 import React from "react";
 
 const FirstStep = ({ questionData, handleInput, error, handleCheckbox }) => {
-  console.info(error);
   return (
     <>
       <div className="box">
