@@ -9,6 +9,7 @@ import { removeModal } from "../../Store/Slices/ModalSlice";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
 import { useEffect } from "react";
+import { validateField } from "../../utils/validation";
 
 const Index = ({ editQuestion = null, type, parentId }) => {
   const dispatch = useDispatch();
@@ -53,12 +54,12 @@ const Index = ({ editQuestion = null, type, parentId }) => {
   }, [editQuestion]);
 
   const handleInput = (e) => {
-    setError("");
+    setError(true);
     const { id, value } = e.target;
     setQuestionData((prevState) => ({ ...prevState, [id]: value }));
   };
   const handlefourAnswerTitle = (e) => {
-    setError("");
+    setError(true);
     const { id, value } = e.target;
     setfourAnswerOptions((prevState) => {
       return prevState.map((item) => {
@@ -70,13 +71,13 @@ const Index = ({ editQuestion = null, type, parentId }) => {
   };
 
   const handleCheckbox = (e) => {
-    setError("");
+    setError(true);
     const { id } = e.target;
     setQuestionData((prevState) => ({ ...prevState, type: id }));
   };
 
   const handlefourAnswerValue = (e) => {
-    setError("");
+    setError(true);
     const { id } = e.target;
     setfourAnswerOptions((prevState) =>
       prevState.map((item) => {
@@ -137,45 +138,6 @@ const Index = ({ editQuestion = null, type, parentId }) => {
     );
   };
   const handleSubmit = () => {
-    const validateForm = (question, four, multiple) => {
-      if (question.title.trim().length < 1) {
-        return "title";
-      } else if (question.type.trim().length < 1) {
-        return "type";
-      }
-      // Validation for Four answer
-      if (question.type === "fourAnswer") {
-        if (!four.every((item) => item.title.trim().length > 0)) {
-          return "option-title";
-        } else if (
-          !four.some((item) => item.value) &&
-          question.for === "azmoon"
-        ) {
-          return "option-value";
-        }
-      }
-      // Validation for multipleChoice
-      if (question.type === "multipleChoice") {
-        if (!multiple.every((item) => item.title.trim().length > 0)) {
-          return "option-title";
-        } else if (
-          !multiple.some((item) => item.value) &&
-          question.for === "azmoon"
-        ) {
-          return "option-value";
-        }
-      }
-      return "";
-    };
-    const tempError = validateForm(
-      questionData,
-      fourAnswerOptions,
-      multipleChoiceOptions
-    );
-    setError(tempError);
-    if (tempError) return;
-
-    // Create proper form based on user filters
     let question = questionData;
     if (question.type === "fourAnswer") {
       question = { ...question, options: [...fourAnswerOptions] };
@@ -184,7 +146,6 @@ const Index = ({ editQuestion = null, type, parentId }) => {
     } else if (question.type === "multipleChoice") {
       question = { ...question, options: [...multipleChoiceOptions] };
     }
-
     if (editQuestion) {
       dispatch(updateQuestion(question));
     } else {
@@ -198,12 +159,6 @@ const Index = ({ editQuestion = null, type, parentId }) => {
     dispatch(removeModal());
   };
 
-  const handleNextPage = () => {
-    if (!questionData.type || !questionData.title) {
-      return setError("step");
-    }
-    setActiveStep(2);
-  };
   const renderNextButtonContent = () => {
     if (activeStep === 1) {
       if (type === "questionnaire" && questionData.type === "descriptive")
@@ -215,15 +170,27 @@ const Index = ({ editQuestion = null, type, parentId }) => {
       return editQuestion ? "ذخیره" : "ایجاد سوال";
     }
   };
+
   const handleNextButton = () => {
     if (activeStep === 1) {
+      const validateFirstStep = (question) => {
+        const titleError = validateField(question.title);
+        const typeError = validateField(question.type);
+        if (titleError !== true) return { error: titleError, field: "title" };
+        if (typeError !== true) return { error: typeError, field: "type" };
+        return true;
+      };
+      const tempError = validateFirstStep(questionData);
+      setError(tempError);
+      if (tempError !== true) return;
       if (type === "questionnaire" && questionData.type === "descriptive")
         handleSubmit();
       else {
-        handleNextPage();
+        setActiveStep(2);
       }
     } else {
-      handleSubmit();
+      const validateSecondStep = () => {};
+      setActiveStep(2);
     }
   };
   return (

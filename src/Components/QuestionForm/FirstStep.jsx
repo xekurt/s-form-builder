@@ -1,6 +1,7 @@
 import React from "react";
 
 const FirstStep = ({ questionData, handleInput, error, handleCheckbox }) => {
+  console.info(error);
   return (
     <>
       <div className="box">
@@ -13,12 +14,21 @@ const FirstStep = ({ questionData, handleInput, error, handleCheckbox }) => {
           name="title"
           value={questionData.title}
           onChange={handleInput}
+          style={{ border: error.field === "title" && "1px solid red" }}
         />
+        {error.field === "title" && (
+          <p style={{ fontSize: "12px", color: "red" }}>
+            {error.error === "small" && "حداقل 3 کاراکتر را وارد کنید"}
+            {error.error === "special" &&
+              "تیتر سوال نباید با علایم نگارشی شروع شود"}
+          </p>
+        )}
       </div>
       <div className="box">
         <label htmlFor="desc" style={{ color: error === "type" && "red" }}>
           * نوع سوال را انتخاب کنید :
         </label>
+
         <div className="option">
           <p>تشریحی</p>
           <input
@@ -63,6 +73,11 @@ const FirstStep = ({ questionData, handleInput, error, handleCheckbox }) => {
             onChange={handleCheckbox}
           />
         </div>
+        {error.field === "type" && (
+          <p style={{ fontSize: "12px", color: "red", marginRight: "1rem" }}>
+            {error.error === "small" && "یک گزینه را انتخاب کنید"}
+          </p>
+        )}
       </div>
     </>
   );

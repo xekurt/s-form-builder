@@ -32,41 +32,6 @@ const Index = ({
         handleDeleteQuestion={handleDeleteQuestion}
         key={index}
       />
-      // <div
-      //   id={id}
-      //   className="question__item"
-      //   key={index}
-      //   draggable
-      //   onDragStart={() => handleDragStart(id, parentId)}
-      //   onDrop={() => handleDrop(id)}
-      //   onDragOver={handleDragOver}
-      // >
-      //   <div style={{ display: "flex", alignItems: "center" }}>
-      //     <span
-      //       className="delete__icon"
-      //       onClick={() => handleDeleteQuestion(parentId, id)}
-      //     >
-      //       ×
-      //     </span>
-      //     <div
-      //       className="edit__icon"
-      //       onClick={() => handleEditQestion(parentId, id)}
-      //     >
-      //       <img src={edit} alt="preview" />
-      //     </div>
-
-      //     <span className="tag">
-      //       {type === "fourAnswer"
-      //         ? "چهارگزینه‌ای"
-      //         : type === "truthy"
-      //         ? "صحیح و غلط"
-      //         : type === "multipleChoice"
-      //         ? "چندجوابی"
-      //         : "تشریحی"}
-      //     </span>
-      //   </div>
-      //   <p>{title}</p>
-      // </div>
     );
   };
   const addQuestionModal = () => {
