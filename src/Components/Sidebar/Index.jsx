@@ -1,9 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import profile from "../../assets/icons/user.png";
 import "./styles.css";
 const Index = () => {
   const [showSidebar, setShowSidebar] = useState(false);
+  const { pathname } = useLocation();
 
   return (
     <div className={`sidebar__container ${showSidebar ? "" : "disable"}`}>
@@ -16,19 +18,46 @@ const Index = () => {
           {`${showSidebar ? ">" : "<"}`}
         </span>
       </div>
+      <div className={`profile__container ${!showSidebar && "hide"}`}>
+        <div className="profile__image">
+          <img src={profile} alt="profile" />
+        </div>
+        <div className="profile__data__container">
+          <p>ayoubrezaei79@gmail.com</p>
+          <p>09180858596</p>
+        </div>
+      </div>
       <ul className="page__items">
         <Link to="/exams">
-          <li>مدیریت آزمون</li>
+          <li className={`${pathname.includes("exams") && "tab__selected"}`}>
+            مدیریت آزمون
+          </li>
         </Link>
 
         <Link to="/questionnaire">
-          <li>مدیریت پرسشنامه</li>
+          <li
+            className={`${
+              pathname.includes("questionnaire") && "tab__selected"
+            }`}
+          >
+            مدیریت پرسشنامه
+          </li>
         </Link>
         <Link to="/questions_bank">
-          <li>بانک سوالات</li>
+          <li
+            className={`${
+              pathname.includes("question_bank") && "tab__selected"
+            }`}
+          >
+            بانک سوالات
+          </li>
         </Link>
         <Link to="analytics">
-          <li>گزارشات</li>
+          <li
+            className={`${pathname.includes("analytics") && "tab__selected"}`}
+          >
+            گزارشات
+          </li>
         </Link>
 
         <li>خروج</li>
