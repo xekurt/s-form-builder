@@ -211,7 +211,8 @@ const Index = ({ editQuestion = null, type, parentId }) => {
         const fourAnswerError = validateFourAnswer(fourAnswer);
         const multipleChoiceError = validateFourAnswer(multiple);
 
-        if (scoreError !== true) return scoreError;
+        if (questionData.for === "exam" && scoreError !== true)
+          return scoreError;
         if (questionData.type === "fourAnswer" && fourAnswerError !== true) {
           return { error: fourAnswerError, field: "fourAnswer" };
         }

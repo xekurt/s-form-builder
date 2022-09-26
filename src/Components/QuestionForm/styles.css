@@ -25,7 +25,7 @@
   border: 1px solid slategray;
 }
 .options p {
-  text-align: end;
+  text-align: center;
   margin: 0.5rem 0.2rem;
 }
 .options input {
