@@ -1,6 +1,6 @@
 .questions__column {
   text-align: center;
-  width: 60%;
+  width: 90%;
   min-height: 100px;
   position: relative;
   background-color: white;
@@ -19,15 +19,13 @@
   padding: 0rem 1rem 2rem 1rem;
 }
 .add__question__btn {
-  position: absolute;
-  bottom: 0;
-  z-index: 10;
-  left: 0;
-  width: 100%;
-  background-color: #219ebc;
+  background-color: darkcyan;
   color: white;
-  border-radius: 0;
-  font-size: large;
+  padding: 0.8rem 0.5rem;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
 }
 .question__item {
   display: flex;
@@ -104,7 +102,6 @@
   border-radius: 10px;
   font-size: 14px;
   padding: 4px;
-  margin: 0rem 0.5rem;
   cursor: pointer;
 }
 .edit__icon img {

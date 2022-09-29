@@ -4,13 +4,14 @@ import Questions from "../../Components/Questions/Index";
 import { useData } from "../../hooks/useData";
 import { useMovement } from "../../hooks/useMovement";
 import "./styles.css";
+import { useDispatch } from "react-redux";
+import { addModal } from "../../Store/Slices/ModalSlice";
 
 const Index = () => {
-  const { surveys } = useData();
+  const dispatch = useDispatch();
+  const { surveys, questions } = useData();
   const [questionnaires, setQuestionnaires] = useState();
   const { handleDrop, handleDragStart } = useMovement();
-  const [selectedSurvey, setSelectedSurvey] = useState(null);
-  const [selectedSurveyId, setSelectedSurveyId] = useState(null);
 
   // Filter out questionnaires from surveys
   useEffect(() => {
@@ -19,28 +20,29 @@ const Index = () => {
     );
   }, [surveys]);
 
-  useEffect(() => {
-    setSelectedSurvey(surveys.find((item) => item.id === selectedSurveyId));
-  }, [selectedSurveyId, surveys]);
-
-  const handleSelectSurvey = (id) => {
-    setSelectedSurveyId(id);
+  const addQuestionModal = () => {
+    dispatch(addModal({ name: "question", type: "questionnaire" }));
   };
 
   return (
     <section className="page">
-      <Questions
-        type="questionnaire"
-        selectedSurvey={selectedSurvey}
-        handleStartMovement={handleDragStart}
-      />
-      <Surveys
-        type="questionnaire"
-        surveysData={questionnaires}
-        handleSelectSurvey={handleSelectSurvey}
-        selectedSurveyId={selectedSurveyId}
-        handleEndMovement={handleDrop}
-      />
+      <div className="questionnaire__questions__container">
+        <Questions
+          type="questionnaire"
+          handleStartMovement={handleDragStart}
+          questions={questions}
+        />
+        <button className="add__question__btn" onClick={addQuestionModal}>
+          اضافه کردن سوال
+        </button>
+      </div>
+      <div className="questionnaire__surveys__container">
+        <Surveys
+          type="questionnaire"
+          surveysData={questionnaires}
+          handleEndMovement={handleDrop}
+        />
+      </div>
     </section>
   );
 };

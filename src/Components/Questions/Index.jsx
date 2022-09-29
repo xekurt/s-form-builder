@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useData } from "../../hooks/useData";
 import { removeQuestion, sortQuestions } from "../../Store/Slices/MainSlice";
 import { addModal } from "../../Store/Slices/ModalSlice";
 import QuestionItem from "./QuestionItem";
 
 import "./styles.css";
 
-const Index = ({
-  type = "free",
-  selectedSurvey,
-  uncategorizedQuestions,
-  handleStartMovement,
-}) => {
+const Index = ({ type = "free", handleStartMovement, questions }) => {
   const dispatch = useDispatch();
 
-  const [showError, setShowError] = useState(null);
   const [sortDetails, setSortDetails] = useState({
     parentId: "",
     originId: "",
@@ -34,39 +29,18 @@ const Index = ({
       />
     );
   };
-  const addQuestionModal = () => {
-    // if your in questions bank page then this line will be executed
-    if (type === "free") {
-      dispatch(addModal({ name: "question", type }));
-    }
-    // else if your in questionnaire or exams page you must have selected a (questionnaire or exam) in order to be able to add a new question
-    else {
-      if (!selectedSurvey) {
-        setShowError(true);
-      } else {
-        setShowError(false);
-        dispatch(
-          addModal({ name: "question", type, parentId: selectedSurvey.id })
-        );
-      }
-    }
-  };
 
   const handleDeleteQuestion = (parentId, id) => {
     dispatch(removeQuestion({ parentId, id }));
   };
-  const handleEditQestion = (parentId, id) => {
-    dispatch(addModal({ name: "updateQuestion", parentId, id, type }));
+  const handleEditQestion = (id) => {
+    dispatch(addModal({ name: "updateQuestion", id }));
   };
 
-  useEffect(() => {
-    setShowError(false);
-  }, [selectedSurvey]);
-
   // DRAG AND DROP LOGIC
-  const handleDragStart = (id, parentId) => {
+  const handleDragStart = (id) => {
     setSortDetails((prevState) => ({ ...prevState, originId: id }));
-    handleStartMovement(id, parentId);
+    handleStartMovement(id);
   };
   const handleDrop = (id) => {
     setSortDetails((prevState) => ({ ...prevState, destinationId: id }));
@@ -83,40 +57,18 @@ const Index = ({
     ) {
       dispatch(
         sortQuestions({
-          parentId: selectedSurvey?.id || "",
           origin: sortDetails.originId,
           destination: sortDetails.destinationId,
         })
       );
-      setSortDetails({ parentId: "", originId: "", destinationId: "" });
+      setSortDetails({ originId: "", destinationId: "" });
     }
-  }, [sortDetails, dispatch, selectedSurvey?.id]);
+  }, [sortDetails, dispatch]);
 
   return (
     <article className="questions__column">
-      <h4>
-        {type === "questionnaire"
-          ? "سوالات پرسشنامه : "
-          : type === "exam"
-          ? "سوالات آزمون : "
-          : "بانک سوالات"}
-        {selectedSurvey?.title}
-      </h4>
       <div className="questions__wrapper">
-        {selectedSurvey?.questions.map(renderQuestions) ?? (
-          <p style={{ margin: "1rem auto", color: showError && "red" }}>
-            {type === "questionnaire"
-              ? " یک پرسشنامه انتخاب کنید"
-              : type === "exam"
-              ? "  یک آزمون انتخاب کنید"
-              : "یک سوال اضافه کنید"}
-          </p>
-        )}
-        {uncategorizedQuestions?.map(renderQuestions)}
-
-        <button className="add__question__btn" onClick={addQuestionModal}>
-          اضافه کردن سوال
-        </button>
+        {questions?.map(renderQuestions)}
       </div>
     </article>
   );

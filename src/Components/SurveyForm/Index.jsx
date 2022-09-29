@@ -19,7 +19,6 @@ const Index = ({ editSurvey, type }) => {
     startDate: "",
     endDate: "",
     picture: "",
-    questions: [],
   });
 
   const handleChangeInput = (e) => {
@@ -145,9 +144,7 @@ const Index = ({ editSurvey, type }) => {
         />
         {error === "invalid" && (
           <p style={{ color: "red", fontSize: "12px" }}>
-            {error === "invalid"
-              ? "تاریخ پایان نمیتواند قبل از تاریخ شروع باشد"
-              : ""}
+            "تاریخ پایان نمیتواند قبل از تاریخ شروع باشد"
           </p>
         )}
       </div>

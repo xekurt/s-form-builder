@@ -15,7 +15,7 @@ import {
   validateMultipleAnswer,
 } from "../../utils/validation";
 
-const Index = ({ editQuestion = null, type, parentId }) => {
+const Index = ({ editQuestion = null, type }) => {
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = useState(1);
   const [error, setError] = useState("initial");
@@ -157,12 +157,7 @@ const Index = ({ editQuestion = null, type, parentId }) => {
     if (editQuestion) {
       dispatch(updateQuestion(question));
     } else {
-      // Check if form has a parent or not
-      if (parentId) {
-        dispatch(addQuestion({ ...question, parentId }));
-      } else {
-        dispatch(addQuestion(question));
-      }
+      dispatch(addQuestion(question));
     }
     dispatch(removeModal());
   };
@@ -225,13 +220,11 @@ const Index = ({ editQuestion = null, type, parentId }) => {
 
         return true;
       };
-
       const tempError = validateSecondStep(
         questionData.defaultScore,
         fourAnswerOptions,
         multipleChoiceOptions
       );
-
       setError(tempError);
       if (tempError !== true) return;
       handleSubmit();

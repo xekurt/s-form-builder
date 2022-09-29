@@ -4,7 +4,6 @@ import { moveQuestion } from "../Store/Slices/MainSlice";
 
 export const useMovement = () => {
   const [movementDetails, setMovementDetails] = useState({
-    parentId: "",
     questionId: "",
     destinationId: "",
   });
@@ -12,11 +11,10 @@ export const useMovement = () => {
   const dispatch = useDispatch();
 
   // Movement logic
-  const handleDragStart = (id, parentId) => {
+  const handleDragStart = (id) => {
     setMovementDetails((prevState) => ({
       ...prevState,
       questionId: id,
-      parentId,
     }));
   };
   const handleDrop = (id) => {
@@ -24,14 +22,9 @@ export const useMovement = () => {
   };
 
   useEffect(() => {
-    if (
-      movementDetails.destinationId &&
-      movementDetails.questionId &&
-      movementDetails.parentId &&
-      movementDetails.destinationId !== movementDetails.parentId
-    ) {
+    if (movementDetails.destinationId && movementDetails.questionId) {
       dispatch(moveQuestion({ ...movementDetails }));
-      setMovementDetails({ destinationId: "", questionId: "", parentId: "" });
+      setMovementDetails({ destinationId: "", questionId: "" });
     }
   }, [movementDetails, dispatch]);
 

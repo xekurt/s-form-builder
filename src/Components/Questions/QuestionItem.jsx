@@ -31,10 +31,7 @@ const questionItem = ({
         >
           ×
         </span>
-        <div
-          className="edit__icon"
-          onClick={() => handleEditQestion(parentId, id)}
-        >
+        <div className="edit__icon" onClick={() => handleEditQestion(id)}>
           <img src={edit} alt="preview" />
         </div>
 

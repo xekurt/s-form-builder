@@ -14,7 +14,7 @@
   width: 95vw;
   height: 100vh;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: flex-start;
   padding: 1rem;
   background-color: aliceblue;

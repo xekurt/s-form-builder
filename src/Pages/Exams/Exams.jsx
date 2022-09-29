@@ -5,41 +5,43 @@ import Questions from "../../Components/Questions/Index";
 import { useData } from "../../hooks/useData";
 import { useMovement } from "../../hooks/useMovement";
 import "./styles.css";
+import { useDispatch } from "react-redux";
+import { addModal } from "../../Store/Slices/ModalSlice";
 
 const Exams = () => {
-  const { surveys } = useData();
+  const { surveys, questions } = useData();
   const [exams, setExams] = useState();
-  const [selectedSurvey, setSelectedSurvey] = useState(null);
-  const [selectedSurveyId, setSelectedSurveyId] = useState(null);
   const { handleDrop, handleDragStart } = useMovement();
+  const dispatch = useDispatch();
 
   // Filter all surveys and access exams
   useEffect(() => {
     setExams(surveys.filter((survey) => survey.type === "exam"));
   }, [surveys]);
 
-  useEffect(() => {
-    setSelectedSurvey(surveys.find((item) => item.id === selectedSurveyId));
-  }, [selectedSurveyId, surveys]);
-
-  const handleSelectSurvey = (id) => {
-    setSelectedSurveyId(id);
+  const addQuestionModal = () => {
+    dispatch(addModal({ name: "question", type: "exam" }));
   };
 
   return (
     <section className="page">
-      <Questions
-        type="exam"
-        selectedSurvey={selectedSurvey}
-        handleStartMovement={handleDragStart}
-      />
-      <Surveys
-        type="exam"
-        surveysData={exams}
-        handleSelectSurvey={handleSelectSurvey}
-        selectedSurveyId={selectedSurveyId}
-        handleEndMovement={handleDrop}
-      />
+      <div className="exams__questions__container">
+        <Questions
+          type="exam"
+          handleStartMovement={handleDragStart}
+          questions={questions}
+        />
+        <button className="add__question__btn" onClick={addQuestionModal}>
+          اضافه کردن سوال
+        </button>
+      </div>
+      <div className="exams__surveys__container">
+        <Surveys
+          type="exam"
+          surveysData={exams}
+          handleEndMovement={handleDrop}
+        />
+      </div>
     </section>
   );
 };

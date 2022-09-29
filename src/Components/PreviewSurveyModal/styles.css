@@ -1,0 +1,15 @@
+.general__info__container {
+  display: flex;
+  flex-direction: column;
+
+  direction: rtl;
+}
+.general__info {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+}
+.general__info p {
+  margin: 0.4rem 0;
+}

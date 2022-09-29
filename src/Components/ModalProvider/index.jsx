@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeModal } from "../../Store/Slices/ModalSlice";
 import AddQuestionModal from "../AddQuestionModal/Index";
+import PreviewSurveyModal from "../PreviewSurveyModal/Index";
 import AddSurveyModal from "../AddSurveyModal/AddSurveyModal";
 import "./styles.css";
 
@@ -33,6 +34,9 @@ const Index = ({ children }) => {
     },
     updateSurvey: (props) => {
       return <AddSurveyModal editSurvey {...props} />;
+    },
+    previewSurvey: (props) => {
+      return <PreviewSurveyModal {...props} />;
     },
     updateQuestion: (props) => {
       return <AddQuestionModal editQuestion {...props} />;

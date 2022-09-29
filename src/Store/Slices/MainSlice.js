@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const mainSlice = createSlice({
   name: "main",
-  initialState: { uncategorizedQuestions: [], surveys: [] },
+  initialState: { questions: [], surveys: [] },
   reducers: {
     addSurvey: (state, action) => {
       const { payload } = action;
@@ -13,6 +13,10 @@ export const mainSlice = createSlice({
         payload: { id },
       } = action;
       state.surveys = state.surveys.filter((survey) => survey.id !== id);
+      state.questions = state.questions.map((question) => {
+        question.parents = question.parents.filter((parent) => parent !== id);
+        return question;
+      });
     },
     updateSurvey: (state, action) => {
       const { payload } = action;
@@ -26,17 +30,7 @@ export const mainSlice = createSlice({
     },
     addQuestion: (state, action) => {
       const { payload } = action;
-
-      if (payload.parentId) {
-        state.surveys = state.surveys.map((survey) => {
-          if (survey.id === payload.parentId) {
-            survey.questions = [...survey.questions, payload];
-            return survey;
-          } else return survey;
-        });
-      } else {
-        state.uncategorizedQuestions.push(payload);
-      }
+      state.questions.push({ ...payload, parents: [] });
     },
     removeQuestion: (state, action) => {
       const {
@@ -52,60 +46,33 @@ export const mainSlice = createSlice({
           } else return survey;
         });
       } else {
-        state.uncategorizedQuestions = state.uncategorizedQuestions.filter(
+        state.questions = state.questions.filter(
           (question) => question.id !== id
         );
       }
     },
     updateQuestion: (state, action) => {
       const { payload } = action;
-
-      if (payload.parentId) {
-        state.surveys = state.surveys.map((survey) => {
-          if (survey.id === payload.parentId) {
-            survey.questions = survey.questions.map((question) => {
-              if (question.id === payload.id) {
-                return payload;
-              } else return question;
-            });
-          }
-          return survey;
-        });
-      } else {
-        state.uncategorizedQuestions = state.uncategorizedQuestions.map(
-          (question) => {
-            if (question.id === payload.id) {
-              return payload;
-            } else {
-              return question;
-            }
-          }
-        );
-      }
+      state.questions = state.questions.map((question) => {
+        if (question.id === payload.id) {
+          return payload;
+        } else {
+          return question;
+        }
+      });
     },
     moveQuestion: (state, action) => {
       const { payload } = action;
 
-      const { parentId, questionId, destinationId } = payload;
-      const targetParent = state.surveys.find(
-        (survey) => survey.id === parentId
-      );
-      const targetQuestion = targetParent.questions.find(
-        (question) => question.id === questionId
-      );
-      state.surveys = state.surveys.map((survey) => {
-        if (survey.id === parentId) {
-          survey.questions = survey.questions.filter(
-            (item) => item.id !== questionId
-          );
-          return survey;
-        } else if (survey.id === destinationId) {
-          survey.questions = [
-            ...survey.questions,
-            { ...targetQuestion, parentId: destinationId },
-          ];
-          return survey;
-        } else return survey;
+      const { questionId, destinationId } = payload;
+      state.questions = state.questions.map((question) => {
+        if (
+          question.id === questionId &&
+          !question.parents.includes(destinationId)
+        ) {
+          return { ...question, parents: [...question.parents, destinationId] };
+        }
+        return question;
       });
     },
     sortQuestions: (state, action) => {
@@ -130,16 +97,15 @@ export const mainSlice = createSlice({
         });
       } else {
         const { origin, destination } = payload;
-        const orgIndex = state.uncategorizedQuestions.findIndex(
+        const orgIndex = state.questions.findIndex(
           (item) => item.id === origin
         );
-        const destIndex = state.uncategorizedQuestions.findIndex(
+        const destIndex = state.questions.findIndex(
           (item) => item.id === destination
         );
-        const temp = state.uncategorizedQuestions[orgIndex];
-        state.uncategorizedQuestions[orgIndex] =
-          state.uncategorizedQuestions[destIndex];
-        state.uncategorizedQuestions[destIndex] = temp;
+        const temp = state.questions[orgIndex];
+        state.questions[orgIndex] = state.questions[destIndex];
+        state.questions[destIndex] = temp;
       }
     },
   },

@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
 
 export const useData = () => {
-  const { surveys } = useSelector((state) => state.main);
-  const { uncategorizedQuestions } = useSelector((state) => state.main);
+  const { surveys, questions } = useSelector((state) => {
+    return state.main;
+  });
   return {
     surveys,
-    uncategorizedQuestions,
+    questions,
   };
 };
