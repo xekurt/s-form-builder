@@ -15,7 +15,6 @@
   max-height: 500px;
   overflow-y: auto;
   border-radius: 5px;
-  border: 1px solid slategray;
   padding: 0rem 1rem 2rem 1rem;
 }
 .add__question__btn {
@@ -37,7 +36,7 @@
   text-align: end;
   cursor: grab;
   margin: 0.5rem auto;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .question__item .tag {
   font-size: 8px;

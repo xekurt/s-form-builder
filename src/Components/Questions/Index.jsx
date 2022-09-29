@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useData } from "../../hooks/useData";
-import { removeQuestion, sortQuestions } from "../../Store/Slices/MainSlice";
+
+import {
+  deleteQuestion,
+  removeQuestion,
+  sortQuestions,
+} from "../../Store/Slices/MainSlice";
 import { addModal } from "../../Store/Slices/ModalSlice";
 import QuestionItem from "./QuestionItem";
 
 import "./styles.css";
 
-const Index = ({ type = "free", handleStartMovement, questions }) => {
+const Index = ({ handleStartMovement, questions, remove, parentId }) => {
   const dispatch = useDispatch();
 
   const [sortDetails, setSortDetails] = useState({
@@ -20,18 +24,24 @@ const Index = ({ type = "free", handleStartMovement, questions }) => {
     return (
       <QuestionItem
         {...item}
+        parentId={parentId}
         handleDrop={handleDrop}
         handleDragOver={handleDragOver}
         handleDragStart={handleDragStart}
         handleEditQestion={handleEditQestion}
         handleDeleteQuestion={handleDeleteQuestion}
+        handleRemoveQuestion={handleRemoveQuestion}
         key={index}
+        remove={remove}
       />
     );
   };
 
-  const handleDeleteQuestion = (parentId, id) => {
-    dispatch(removeQuestion({ parentId, id }));
+  const handleDeleteQuestion = (id) => {
+    dispatch(deleteQuestion({ id }));
+  };
+  const handleRemoveQuestion = (id, parentId) => {
+    dispatch(removeQuestion({ id, parentId }));
   };
   const handleEditQestion = (id) => {
     dispatch(addModal({ name: "updateQuestion", id }));

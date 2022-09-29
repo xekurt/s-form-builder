@@ -8,7 +8,7 @@ import "./styles.css";
 const Index = ({ id }) => {
   const [surveyData, setSurveyData] = useState();
   const { surveys, questions } = useData();
-  console.info(questions);
+
   useEffect(() => {
     const surveyInfo = surveys.find((item) => item.id === id);
     const surveyQuestions = questions?.filter((question) =>
@@ -30,7 +30,11 @@ const Index = ({ id }) => {
           <p>تاریخ پایان : {surveyData?.surveyInfo.endDate}</p>
         </div>
         <div className="survey__questions">
-          <Questions questions={surveyData?.surveyQuestions} />
+          <Questions
+            questions={surveyData?.surveyQuestions}
+            parentId={surveyData?.surveyInfo.id}
+            remove
+          />
         </div>
       </div>
     </section>

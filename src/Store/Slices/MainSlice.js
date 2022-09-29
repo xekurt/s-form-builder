@@ -32,24 +32,29 @@ export const mainSlice = createSlice({
       const { payload } = action;
       state.questions.push({ ...payload, parents: [] });
     },
+    deleteQuestion: (state, action) => {
+      const { payload } = action;
+      const { id } = payload;
+      state.questions = state.questions.filter(
+        (question) => question.id !== id
+      );
+    },
     removeQuestion: (state, action) => {
-      const {
-        payload: { parentId, id },
-      } = action;
-      if (parentId) {
-        state.surveys = state.surveys.map((survey) => {
-          if (survey.id === parentId) {
-            survey.questions = survey.questions.filter(
-              (question) => question.id !== id
-            );
-            return survey;
-          } else return survey;
-        });
-      } else {
-        state.questions = state.questions.filter(
-          (question) => question.id !== id
-        );
-      }
+      const { payload } = action;
+      const { id, parentId } = payload;
+      state.questions = state.questions.map((question) => {
+        if (question.id === id) {
+          question.parents = question.parents.filter(
+            (parent) => parent !== parentId
+          );
+          return question;
+        } else {
+          return question;
+        }
+      });
+      // state.questions = state.questions.filter(
+      //   (question) => question.id !== id
+      // );
     },
     updateQuestion: (state, action) => {
       const { payload } = action;
@@ -118,6 +123,7 @@ export const {
   clearAllSurveys,
   addQuestion,
   moveQuestion,
+  deleteQuestion,
   removeQuestion,
   sortQuestions,
   updateQuestion,

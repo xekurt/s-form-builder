@@ -4,13 +4,15 @@ import edit from "../../assets/icons/edit.png";
 const questionItem = ({
   id,
   index,
-  parentId,
+  remove,
   type,
   title,
   options,
+  parentId,
   handleDragOver,
   handleDragStart,
   handleDeleteQuestion,
+  handleRemoveQuestion,
   handleDrop,
   handleEditQestion,
 }) => {
@@ -20,14 +22,18 @@ const questionItem = ({
       className="question__item"
       key={index}
       draggable
-      onDragStart={() => handleDragStart(id, parentId)}
+      onDragStart={() => handleDragStart(id)}
       onDrop={() => handleDrop(id)}
       onDragOver={handleDragOver}
     >
       <div className="question__actions">
         <span
           className="delete__icon"
-          onClick={() => handleDeleteQuestion(parentId, id)}
+          onClick={() =>
+            remove
+              ? handleRemoveQuestion(id, parentId)
+              : handleDeleteQuestion(id)
+          }
         >
           ×
         </span>
