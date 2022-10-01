@@ -16,6 +16,7 @@ const Index = ({ editSurvey, type }) => {
     type,
     title: "",
     desc: "",
+    authenticate: false,
     startDate: "",
     endDate: "",
     picture: "",
@@ -23,7 +24,9 @@ const Index = ({ editSurvey, type }) => {
 
   const handleChangeInput = (e) => {
     const { id, value } = e.target;
+
     setError("");
+
     // Handle picture input file
     if (id === "picture") {
       const [file] = e.target.files;
@@ -33,6 +36,12 @@ const Index = ({ editSurvey, type }) => {
           [id]: URL.createObjectURL(file),
         }));
       }
+    }
+    if (id === "authenticate") {
+      setSurveyData((prevState) => ({
+        ...prevState,
+        authenticate: !prevState.authenticate,
+      }));
     } else setSurveyData((prevState) => ({ ...prevState, [id]: value }));
   };
 
@@ -111,6 +120,23 @@ const Index = ({ editSurvey, type }) => {
           onChange={handleChangeInput}
         />
       </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row-reverse",
+          alignItems: "center",
+          margin: "1rem 0",
+        }}
+      >
+        <label htmlFor="authenticate">احراز هویت الزامی</label>
+        <input
+          type="checkbox"
+          id="authenticate"
+          name="authenticate"
+          value={surveyData.authenticate}
+          onChange={handleChangeInput}
+        />
+      </div>
       <div className="box">
         <label htmlFor="startDate">*تاریخ شروع :</label>
         <input
@@ -127,6 +153,7 @@ const Index = ({ editSurvey, type }) => {
           </p>
         )}
       </div>
+
       <div className="box">
         <label
           htmlFor="endDate"
@@ -162,6 +189,7 @@ const Index = ({ editSurvey, type }) => {
           <img width="48px" height="48px" src={surveyData.picture} alt="pic" />
         )}
       </div>
+
       <button className="create__button" onClick={handleSubmit}>
         {editSurvey ? "ذخیره" : "ایجاد پرسشنامه"}
       </button>
