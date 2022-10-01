@@ -23,6 +23,10 @@ const Exams = () => {
     dispatch(addModal({ name: "question", type: "exam" }));
   };
 
+  const addSurveyModal = () => {
+    dispatch(addModal({ name: "survey", type: "exams" }));
+  };
+
   return (
     <section className="page">
       <div className="exams__questions__container">
@@ -41,6 +45,9 @@ const Exams = () => {
           surveysData={exams}
           handleEndMovement={handleDrop}
         />
+        <button onClick={addSurveyModal} className="add__button">
+          ساخت آزمون جدید
+        </button>
       </div>
     </section>
   );

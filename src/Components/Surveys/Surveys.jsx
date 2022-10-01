@@ -15,10 +15,6 @@ const Surveys = ({
 }) => {
   const dispatch = useDispatch();
 
-  const addSurveyModal = () => {
-    dispatch(addModal({ name: "survey", type }));
-  };
-
   const handleDragOver = (e) => {
     e.preventDefault();
   };
@@ -77,9 +73,6 @@ const Surveys = ({
               : "آزمونی ثبت نشده است"}
           </p>
         )}
-        <button onClick={addSurveyModal} className="add__button">
-          {type === "questionnaire" ? "ساخت پرسشنامه جدید" : "ساخت آزمون جدید"}
-        </button>
       </div>
     </article>
   );

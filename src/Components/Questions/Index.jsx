@@ -79,6 +79,8 @@ const Index = ({ handleStartMovement, questions, remove, parentId }) => {
     <article className="questions__column">
       <div className="questions__wrapper">
         {questions?.map(renderQuestions)}
+        {questions?.length === 0 && "سوالی وجود ندارد"}
+        {!questions && "سوالی وجود ندارد"}
       </div>
     </article>
   );

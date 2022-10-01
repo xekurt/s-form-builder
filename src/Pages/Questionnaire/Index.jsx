@@ -23,6 +23,9 @@ const Index = () => {
   const addQuestionModal = () => {
     dispatch(addModal({ name: "question", type: "questionnaire" }));
   };
+  const addSurveyModal = () => {
+    dispatch(addModal({ name: "survey", type: "exams" }));
+  };
 
   return (
     <section className="page">
@@ -42,6 +45,9 @@ const Index = () => {
           surveysData={questionnaires}
           handleEndMovement={handleDrop}
         />
+        <button onClick={addSurveyModal} className="add__button">
+          ساخت آزمون جدید
+        </button>
       </div>
     </section>
   );

@@ -28,6 +28,11 @@ const Index = () => {
         </div>
       </div>
       <ul className="page__items">
+        <Link to="/landing">
+          <li className={`${pathname.includes("exams") && "tab__selected"}`}>
+            صفحه اصلی
+          </li>
+        </Link>
         <Link to="/exams">
           <li className={`${pathname.includes("exams") && "tab__selected"}`}>
             مدیریت آزمون

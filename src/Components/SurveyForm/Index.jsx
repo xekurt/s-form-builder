@@ -120,23 +120,7 @@ const Index = ({ editSurvey, type }) => {
           onChange={handleChangeInput}
         />
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row-reverse",
-          alignItems: "center",
-          margin: "1rem 0",
-        }}
-      >
-        <label htmlFor="authenticate">احراز هویت الزامی</label>
-        <input
-          type="checkbox"
-          id="authenticate"
-          name="authenticate"
-          value={surveyData.authenticate}
-          onChange={handleChangeInput}
-        />
-      </div>
+
       <div className="box">
         <label htmlFor="startDate">*تاریخ شروع :</label>
         <input
@@ -174,6 +158,23 @@ const Index = ({ editSurvey, type }) => {
             "تاریخ پایان نمیتواند قبل از تاریخ شروع باشد"
           </p>
         )}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row-reverse",
+          alignItems: "center",
+          margin: "1rem 0",
+        }}
+      >
+        <label htmlFor="authenticate">احراز هویت الزامی</label>
+        <input
+          type="checkbox"
+          id="authenticate"
+          name="authenticate"
+          value={surveyData.authenticate}
+          onChange={handleChangeInput}
+        />
       </div>
       <div className="box">
         <label htmlFor="pictures">تصویر</label>
