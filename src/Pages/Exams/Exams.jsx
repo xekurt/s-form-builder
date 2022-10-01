@@ -24,7 +24,7 @@ const Exams = () => {
   };
 
   const addSurveyModal = () => {
-    dispatch(addModal({ name: "survey", type: "exams" }));
+    dispatch(addModal({ name: "survey", type: "exam" }));
   };
 
   return (

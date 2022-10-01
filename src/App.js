@@ -6,6 +6,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Analytics from "./Pages/Analytics/Index";
 import QuestionsBank from "./Pages/QuestionsBank/Index";
 import Landing from "./Pages/Landing/Landing";
+import TakeSurvey from "./Pages/TakeSurvey/TakeSurvey";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="analytics" element={<Analytics />} />
         <Route path="questions_bank" element={<QuestionsBank />} />
         <Route path="landing" element={<Landing />} />
+        <Route path="takesurvey/:id" element={<TakeSurvey />} />
       </Routes>
     </div>
   );

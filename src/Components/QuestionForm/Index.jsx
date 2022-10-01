@@ -9,11 +9,7 @@ import { removeModal } from "../../Store/Slices/ModalSlice";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
 import { useEffect } from "react";
-import {
-  validateField,
-  validateFourAnswer,
-  validateMultipleAnswer,
-} from "../../utils/validation";
+import { validateField, validateFourAnswer } from "../../utils/validation";
 
 const Index = ({ editQuestion = null, type }) => {
   const dispatch = useDispatch();

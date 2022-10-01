@@ -35,7 +35,6 @@
   justify-content: space-between;
   padding: 0.5rem;
   text-align: end;
-
   margin: 0.5rem auto;
   border: 1px solid #93b7be;
   background-color: white;
@@ -43,8 +42,19 @@
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
+.cursor {
+  cursor: pointer;
+}
 .selected {
   border: 2px solid #66a868;
+}
+.client__icons {
+  display: flex;
+  align-items: center;
+}
+.admin__icons {
+  display: flex;
+  align-items: center;
 }
 .preview__icon {
   width: 16px;
@@ -56,6 +66,19 @@
   cursor: pointer;
 }
 .preview__icon img {
+  width: 100%;
+  height: 100%;
+}
+.form__icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 4px;
+  margin: 0rem 0.5rem;
+  cursor: pointer;
+}
+.form__icon img {
   width: 100%;
   height: 100%;
 }
