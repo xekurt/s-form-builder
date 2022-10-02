@@ -13,3 +13,9 @@
 .general__info p {
   margin: 0.4rem 0;
 }
+
+.survey__questions {
+  overflow-y: hidden;
+  max-height: 400px;
+  padding: 1rem;
+}

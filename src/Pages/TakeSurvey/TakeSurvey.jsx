@@ -14,7 +14,7 @@ const TakeSurvey = () => {
   const [formStructure, setFormStructure] = useState([]);
   const [started, setStarted] = useState(false);
   const { surveys, questions } = useData();
-  console.info(formStructure);
+
   useEffect(() => {
     if (questions.length > 0 && surveys.length > 0) {
       const surveyId = location.pathname.split("/")[2];
@@ -37,16 +37,21 @@ const TakeSurvey = () => {
             ...formObjects,
             { id, type: "text", label: item.title, value: "" },
           ];
-        } else if (type === "fourAnswer") {
+        } else if (type === "fourAnswer" || type === "multipleChoice") {
           formObjects = [
             ...formObjects,
             {
               id,
-              type: "four",
+              type,
               label: item.title,
               options: item.options.map((opt) => ({ ...opt, value: false })),
-              valie: "",
+              value: "",
             },
+          ];
+        } else if (type === "truthy") {
+          formObjects = [
+            ...formObjects,
+            { id, type, label: item.title, value: null },
           ];
         }
       });
@@ -66,6 +71,57 @@ const TakeSurvey = () => {
       })
     );
   };
+  const handleFourAnswerInput = (e) => {
+    const { id, value } = e.target;
+
+    setFormStructure(
+      formStructure.map((item) => {
+        if (item.type === "fourAnswer") {
+          return {
+            ...item,
+            options: item.options.map((option) => {
+              if (option.id === id) {
+                return { ...option, value: true };
+              } else {
+                return { ...option, value: false };
+              }
+            }),
+          };
+        } else return item;
+      })
+    );
+  };
+  const handleMultipleChoiceInput = (e) => {
+    const { id } = e.target;
+
+    setFormStructure(
+      formStructure.map((item) => {
+        if (item.type === "multipleChoice") {
+          // console.info("aaa");
+          return {
+            ...item,
+            options: item.options.map((option) => {
+              if (option.id === id) {
+                console.info(option);
+                return { ...option, value: true };
+              } else return option;
+            }),
+          };
+        } else return item;
+      })
+    );
+  };
+  const handleTruthyInput = (e) => {
+    const { name, id } = e.target;
+    setFormStructure(
+      formStructure.map((form) => {
+        if (form.id === id) {
+          return { ...form, value: name === "truth" ? true : false };
+        } else return form;
+      })
+    );
+  };
+
   const renderQuestions = (item, index) => {
     const { type } = item;
     if (type === "text") {
@@ -84,21 +140,84 @@ const TakeSurvey = () => {
           />
         </div>
       );
-    } else if (type === "four") {
+    } else if (type === "fourAnswer") {
       return (
-        <div className="question__content" key={item.id}>
+        <div className="input__box question" key={item.id}>
           <label>{item.label}</label>
           {item.options.map((option) => (
-            <div key={option.title} className="four__answer__template">
-              <label htmlFor={item.id}>{option.title}</label>
+            <div key={option.title} className="input__option">
+              <label htmlFor={option.id}>{option.title}</label>
               <input
                 type="checkbox"
                 style={{ width: "26px" }}
-                id={item.id}
-                name={item.id}
+                checked={
+                  formStructure
+                    .find((form) => form.id === item.id)
+                    .options.find((op) => op.id === option.id).value
+                }
+                id={option.id}
+                name={option.id}
+                onChange={handleFourAnswerInput}
               />
             </div>
           ))}
+        </div>
+      );
+    } else if (type === "multipleChoice") {
+      return (
+        <div className="input__box question" key={item.id}>
+          <label>{item.label}</label>
+          {item.options.map((option) => (
+            <div key={option.title} className="input__option">
+              <label htmlFor={option.id}>{option.title}</label>
+              <input
+                type="checkbox"
+                style={{ width: "26px" }}
+                id={option.id}
+                name={option.id}
+                checked={
+                  formStructure
+                    .find((form) => form.id === item.id)
+                    .options.find((op) => op.id === option.id).value
+                }
+                onChange={handleMultipleChoiceInput}
+              />
+            </div>
+          ))}
+        </div>
+      );
+    } else if (type === "truthy") {
+      return (
+        <div className="input__box question" key={index}>
+          <label>
+            {item.label}
+            {item.defaultScore && (
+              <span>{` (${item.defaultScore} نمره) `}</span>
+            )}
+          </label>
+          <div className="truthy__template">
+            <label htmlFor="truth">صحیح</label>
+            <input
+              type="radio"
+              name="truth"
+              checked={formStructure.find((form) => form.id === item.id).value}
+              onChange={handleTruthyInput}
+              id={item.id}
+            />
+          </div>
+          <div className="truthy__template">
+            <label>غلط</label>
+            <input
+              type="radio"
+              name="false"
+              checked={
+                formStructure.find((form) => form.id === item.id).value ===
+                false
+              }
+              onChange={handleTruthyInput}
+              id={item.id}
+            />
+          </div>
         </div>
       );
     }

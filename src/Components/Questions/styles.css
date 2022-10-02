@@ -1,18 +1,21 @@
 .questions__column {
   text-align: center;
   width: 90%;
+  max-height: inherit;
   min-height: 100px;
   position: relative;
   background-color: white;
+  overflow-y: hidden;
   padding: 0.8rem;
   border-radius: 5px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .questions__wrapper {
+  direction: rtl;
   margin: 1rem auto;
-  min-height: 100px;
-  max-height: 500px;
+  min-height: 10px;
+  max-height: inherit;
   overflow-y: auto;
   border-radius: 5px;
   padding: 0rem 1rem 2rem 1rem;

@@ -16,6 +16,10 @@
   border: 1px solid black;
   padding: 1rem;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
 }
 .takesurvey__buttons {
   width: 100%;
@@ -47,6 +51,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  width: 100%;
 }
 .input__box label {
   margin: 0.4rem;
@@ -56,7 +61,15 @@
   color: gray;
 }
 
-.four__input {
+.input__option {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+}
+
+.truthy__template {
+  display: flex;
+}
+
+.question {
+  border: 1px solid red;
 }

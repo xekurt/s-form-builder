@@ -35,6 +35,20 @@ export const mainSlice = createSlice({
     deleteQuestion: (state, action) => {
       const { payload } = action;
       const { id } = payload;
+
+      const parents = state.questions.find(
+        (question) => question.id === id
+      )?.parents;
+      state.surveys = state.surveys.map((survey) => {
+        if (parents.includes(survey.id)) {
+          return {
+            ...survey,
+            questionIds: survey.questionIds.filter((q) => q !== id),
+          };
+        } else {
+          return survey;
+        }
+      });
       state.questions = state.questions.filter(
         (question) => question.id !== id
       );
