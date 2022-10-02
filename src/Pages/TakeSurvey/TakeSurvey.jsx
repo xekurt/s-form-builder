@@ -7,6 +7,7 @@ import "./styles.css";
 
 const TakeSurvey = () => {
   const location = useLocation();
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [data, setData] = useState({
     surveyInfo: {},
     surveyQuestions: [],
@@ -120,11 +121,11 @@ const TakeSurvey = () => {
     );
   };
 
-  const renderQuestions = (item, index) => {
+  const renderQuestion = (item, index) => {
     const { type } = item;
     if (type === "text") {
       return (
-        <div className="input__box" key={index}>
+        <div className="input__box question" key={index}>
           <label>
             {item.label}
             {item.defaultScore && (
@@ -132,6 +133,7 @@ const TakeSurvey = () => {
             )}
           </label>
           <input
+            disabled={!started}
             id={item.id}
             onChange={handleTextInput}
             value={formStructure.find((form) => form.id === item.id).value}
@@ -146,6 +148,7 @@ const TakeSurvey = () => {
             <div key={option.title} className="input__option">
               <label htmlFor={option.id}>{option.title}</label>
               <input
+                disabled={!started}
                 type="checkbox"
                 style={{ width: "26px" }}
                 checked={
@@ -169,6 +172,7 @@ const TakeSurvey = () => {
             <div key={option.title} className="input__option">
               <label htmlFor={option.id}>{option.title}</label>
               <input
+                disabled={!started}
                 type="checkbox"
                 style={{ width: "26px" }}
                 id={option.id}
@@ -196,6 +200,7 @@ const TakeSurvey = () => {
           <div className="truthy__template">
             <label htmlFor="truth">صحیح</label>
             <input
+              disabled={!started}
               type="radio"
               name="truth"
               checked={formStructure.find((form) => form.id === item.id).value}
@@ -206,6 +211,7 @@ const TakeSurvey = () => {
           <div className="truthy__template">
             <label>غلط</label>
             <input
+              disabled={!started}
               type="radio"
               name="false"
               checked={
@@ -220,31 +226,53 @@ const TakeSurvey = () => {
       );
     }
   };
+  const renderQuestions = (item, index) => {
+    return index === currentIndex && renderQuestion(item, index);
+  };
 
   return (
     <section className="takesurvey__container page">
+      <h3 style={{ margin: "2rem auto" }}>روی دکمه شروع آزمون کلیک کنید</h3>
       <div className="takesurvey__header">
         <h3>{data.surveyInfo?.title}</h3>
         <p>{data.surveyInfo?.desc}</p>
       </div>
       <div className="takesurvey__wrapper">
         {formStructure.map(renderQuestions)}
-        <div className="takesurvey__buttons">
-          {!started && (
-            <button onClick={() => setStarted(true)}>شروع آزمون</button>
-          )}
-          {started && (
-            <div className="started__buttons">
-              <button id="end" onClick={() => setStarted(false)}>
-                پایان آزمون
+      </div>
+      <div className="takesurvey__buttons">
+        {!started && (
+          <button onClick={() => setStarted(true)}>شروع آزمون</button>
+        )}
+        {started && (
+          <div className="started__buttons">
+            <button id="end" onClick={() => setStarted(false)}>
+              پایان آزمون
+            </button>
+            <div>
+              <button
+                id="prev"
+                onClick={() =>
+                  currentIndex > 0
+                    ? setCurrentIndex((prevState) => prevState - 1)
+                    : null
+                }
+              >
+                سوال قبل
               </button>
-              <div>
-                <button id="next">سوال بعد</button>
-                <button id="prev">سوال قبل</button>
-              </div>
+              <button
+                id="next"
+                onClick={() =>
+                  currentIndex < formStructure.length - 1
+                    ? setCurrentIndex((prevState) => prevState + 1)
+                    : null
+                }
+              >
+                سوال بعد
+              </button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );
