@@ -15,7 +15,6 @@ const Index = () => {
 
   // Filter out questionnaires from surveys
   useEffect(() => {
-    console.info(surveys);
     setQuestionnaires(
       surveys?.filter((survey) => survey?.type === "questionnaire")
     );

@@ -97,12 +97,10 @@ const TakeSurvey = () => {
     setFormStructure(
       formStructure.map((item) => {
         if (item.type === "multipleChoice") {
-          // console.info("aaa");
           return {
             ...item,
             options: item.options.map((option) => {
               if (option.id === id) {
-                console.info(option);
                 return { ...option, value: true };
               } else return option;
             }),
