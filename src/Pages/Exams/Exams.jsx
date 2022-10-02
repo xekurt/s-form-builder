@@ -16,7 +16,7 @@ const Exams = () => {
 
   // Filter all surveys and access exams
   useEffect(() => {
-    setExams(surveys.filter((survey) => survey.type === "exam"));
+    setExams(surveys?.filter((survey) => survey?.type === "exam"));
   }, [surveys]);
 
   const addQuestionModal = () => {

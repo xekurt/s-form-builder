@@ -15,8 +15,9 @@ const Index = () => {
 
   // Filter out questionnaires from surveys
   useEffect(() => {
+    console.info(surveys);
     setQuestionnaires(
-      surveys.filter((survey) => survey.type === "questionnaire")
+      surveys?.filter((survey) => survey?.type === "questionnaire")
     );
   }, [surveys]);
 
@@ -24,7 +25,7 @@ const Index = () => {
     dispatch(addModal({ name: "question", type: "questionnaire" }));
   };
   const addSurveyModal = () => {
-    dispatch(addModal({ name: "survey", type: "exams" }));
+    dispatch(addModal({ name: "survey", type: "questionnaire" }));
   };
 
   return (

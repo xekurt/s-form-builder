@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import profile from "../../assets/icons/user.png";
@@ -6,6 +6,10 @@ import "./styles.css";
 const Index = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    setShowSidebar(false);
+  }, [pathname]);
 
   return (
     <div className={`sidebar__container ${showSidebar ? "" : "disable"}`}>

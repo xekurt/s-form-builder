@@ -20,6 +20,7 @@ const Index = ({ editSurvey, type }) => {
     startDate: "",
     endDate: "",
     picture: "",
+    questionIds: [],
   });
 
   const handleChangeInput = (e) => {

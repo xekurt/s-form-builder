@@ -64,6 +64,7 @@
 }
 .four__answer__template {
   display: flex;
+
   width: 24%;
   align-items: center;
   justify-content: flex-end;
