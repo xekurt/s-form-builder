@@ -11,7 +11,13 @@ import QuestionItem from "./QuestionItem";
 
 import "./styles.css";
 
-const Index = ({ handleStartMovement, questions, remove, parentId }) => {
+const Index = ({
+  handleStartMovement,
+  questions,
+  remove,
+  parentId,
+  noDrag,
+}) => {
   const dispatch = useDispatch();
 
   const [sortDetails, setSortDetails] = useState({
@@ -31,6 +37,7 @@ const Index = ({ handleStartMovement, questions, remove, parentId }) => {
         handleEditQestion={handleEditQestion}
         handleDeleteQuestion={handleDeleteQuestion}
         handleRemoveQuestion={handleRemoveQuestion}
+        noDrag={noDrag}
         key={index}
         remove={remove}
       />

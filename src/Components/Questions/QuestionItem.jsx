@@ -8,6 +8,7 @@ const questionItem = ({
   type,
   title,
   options,
+  noDrag,
   parentId,
   handleDragOver,
   handleDragStart,
@@ -21,7 +22,7 @@ const questionItem = ({
       id={id}
       className="question__item"
       key={index}
-      draggable
+      draggable={!noDrag}
       onDragStart={() => handleDragStart(id)}
       onDrop={() => handleDrop(id)}
       onDragOver={handleDragOver}

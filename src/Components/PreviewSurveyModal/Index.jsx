@@ -33,6 +33,7 @@ const Index = ({ id }) => {
           <Questions
             questions={surveyData?.surveyQuestions}
             parentId={surveyData?.surveyInfo.id}
+            noDrag
             remove
           />
         </div>
